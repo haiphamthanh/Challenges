@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // B1: Define types
@@ -49,3 +50,4 @@ class Builder {
         return 1
     }
 }
+*/
