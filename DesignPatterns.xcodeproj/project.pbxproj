@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A3AD79F24C0B36900FD4C30 /* AbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3AD79E24C0B36900FD4C30 /* AbstractFactory.swift */; };
+		8A3AD7A124C0BEA100FD4C30 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3AD7A024C0BEA100FD4C30 /* Builder.swift */; };
 		8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D380A24C09615003B2824 /* AppDelegate.swift */; };
 		8A5D380D24C09615003B2824 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D380C24C09615003B2824 /* ViewController.swift */; };
 		8A5D381024C09615003B2824 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5D380E24C09615003B2824 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		8A3AD79E24C0B36900FD4C30 /* AbstractFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractFactory.swift; sourceTree = "<group>"; };
+		8A3AD7A024C0BEA100FD4C30 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		8A5D380724C09615003B2824 /* DesignPatterns.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignPatterns.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5D380A24C09615003B2824 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A5D380C24C09615003B2824 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				8A5D383924C09D45003B2824 /* Singleton.swift */,
 				8A5D383B24C0A51B003B2824 /* Factory.swift */,
 				8A3AD79E24C0B36900FD4C30 /* AbstractFactory.swift */,
+				8A3AD7A024C0BEA100FD4C30 /* Builder.swift */,
 			);
 			path = Creations;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				8A3AD79F24C0B36900FD4C30 /* AbstractFactory.swift in Sources */,
 				8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
+				8A3AD7A124C0BEA100FD4C30 /* Builder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
