@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // B1:
@@ -106,3 +107,4 @@ class AbstractFactory {
         return 1
     }
 }
+*/
