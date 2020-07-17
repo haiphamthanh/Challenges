@@ -35,3 +35,17 @@ class Machine {
         return "\(buttonType) \(switchTyle)"
     }
 }
+
+// Final class
+class Builder {
+    func main() -> Int {
+        let machine = Machine()
+        let otherMachine = Machine(btnType: .ovan)
+        
+        print(machine.description())
+        print("\n")
+        print(otherMachine.description())
+        
+        return 1
+    }
+}
