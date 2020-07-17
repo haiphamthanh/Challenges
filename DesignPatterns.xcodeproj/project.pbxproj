@@ -18,6 +18,7 @@
 		8A5D382B24C09616003B2824 /* DesignPatternsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D382A24C09616003B2824 /* DesignPatternsUITests.swift */; };
 		8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383924C09D45003B2824 /* Singleton.swift */; };
 		8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383B24C0A51B003B2824 /* Factory.swift */; };
+		8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D324C19A1C00130B1C /* Prototype.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		8A5D382C24C09616003B2824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A5D383924C09D45003B2824 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		8A5D383B24C0A51B003B2824 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		8AEBF1D324C19A1C00130B1C /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				8A5D383B24C0A51B003B2824 /* Factory.swift */,
 				8A3AD79E24C0B36900FD4C30 /* AbstractFactory.swift */,
 				8A3AD7A024C0BEA100FD4C30 /* Builder.swift */,
+				8AEBF1D324C19A1C00130B1C /* Prototype.swift */,
 			);
 			path = Creations;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			files = (
 				8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */,
 				8A5D380D24C09615003B2824 /* ViewController.swift in Sources */,
+				8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */,
 				8A3AD79F24C0B36900FD4C30 /* AbstractFactory.swift in Sources */,
 				8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
