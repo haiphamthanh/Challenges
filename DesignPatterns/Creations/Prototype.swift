@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 class Robot {
@@ -45,3 +46,4 @@ class Prototype {
         return 1
     }
 }
+*/
