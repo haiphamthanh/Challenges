@@ -10,26 +10,49 @@ import Foundation
 
 // root Bank
 class Bank {
+    // SOLVE 2: The bank contains accounts
+    private(set) var account: Account
+    init(account: Account) {
+        self.account = account
+    }
+    
+    func openAccount() {
+        return account.openAccount()
+    }
 }
 
-// TPBank and Accounts
+// Bank groups
 class TPBank: Bank {
+    override func openAccount() {
+        print("Open your account at TPBank is a")
+        
+        super.openAccount()
+    }
 }
 
-class TPBankCheckingAccount: TPBank {
-}
-
-class TPBankSavingAccount: TPBank {
-}
-
-// VietComBank and Account
 class VietComBank: Bank {
+    override func openAccount() {
+        print("Open your account at VietComBank is a")
+        
+        super.openAccount()
+    }
 }
 
-class VietComBankCheckingAccount: VietComBank {
+// SOLVE 1: Make a Account group
+protocol Account {
+    func openAccount()
 }
 
-class VietComBankSavingAccount: VietComBank {
+class CheckingAccount: Account {
+    func openAccount() {
+        print("Checking account")
+    }
+}
+
+class SavingAccount: Account {
+    func openAccount() {
+        print("Saving account")
+    }
 }
 
 // PROBLEM: When we make new bank, we also have checking and saving account
@@ -39,6 +62,15 @@ class VietComBankSavingAccount: VietComBank {
 // Final class
 class Bridge {
     func main() -> Int {
+        let ckAccount = CheckingAccount()
+        let svAccount = SavingAccount()
+        
+        let vietCBank = VietComBank(account: ckAccount)
+        let tpBank = TPBank(account: svAccount)
+        
+        vietCBank.openAccount()
+        tpBank.openAccount()
+        
         return 1
     }
 }
