@@ -109,6 +109,7 @@
 		8A5D380924C09615003B2824 /* DesignPatterns */ = {
 			isa = PBXGroup;
 			children = (
+				8A5F306D24C2AB56002DE99B /* Behaviors */,
 				8A5D383824C0985B003B2824 /* Creations */,
 				8A5D380A24C09615003B2824 /* AppDelegate.swift */,
 				8A5D380C24C09615003B2824 /* ViewController.swift */,
@@ -149,6 +150,13 @@
 				8AEBF1D524C19EF700130B1C /* ObjectPool.swift */,
 			);
 			path = Creations;
+			sourceTree = "<group>";
+		};
+		8A5F306D24C2AB56002DE99B /* Behaviors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Behaviors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
