@@ -16,3 +16,5 @@
 * Nhớm cấu trúc:
  -> Adapter: Xây dựng lớp trung gian(adapter) giúp cho các đối tượng khác nhau có thể hoạt động được với nhau.
  -> Bridge: Chia nhỏ một class to thành các class con cùng nhóm chức năng -> hoạt động độc lập nhau -> giảm thiểu tác động.
+ -> Composite: Lấy ví dụ là cây thư mục (thư mục chứa files và tập các thư mục con, thư mục con lại chứa file và tập các thư mục con khác).
+ -> Decorator: Thêm những tính năng mới mà không thay đổi cấu trúc của đối tượng.
