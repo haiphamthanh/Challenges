@@ -18,6 +18,7 @@
 		8A5D382B24C09616003B2824 /* DesignPatternsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D382A24C09616003B2824 /* DesignPatternsUITests.swift */; };
 		8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383924C09D45003B2824 /* Singleton.swift */; };
 		8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383B24C0A51B003B2824 /* Factory.swift */; };
+		8A5F306F24C2B2EC002DE99B /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F306E24C2B2EC002DE99B /* Adapter.swift */; };
 		8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D324C19A1C00130B1C /* Prototype.swift */; };
 		8AEBF1D624C19EF700130B1C /* ObjectPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D524C19EF700130B1C /* ObjectPool.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		8A5D382C24C09616003B2824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A5D383924C09D45003B2824 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		8A5D383B24C0A51B003B2824 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		8A5F306E24C2B2EC002DE99B /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
 		8AEBF1D324C19A1C00130B1C /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 		8AEBF1D524C19EF700130B1C /* ObjectPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,8 +111,8 @@
 		8A5D380924C09615003B2824 /* DesignPatterns */ = {
 			isa = PBXGroup;
 			children = (
-				8A5F306D24C2AB56002DE99B /* Behaviors */,
-				8A5D383824C0985B003B2824 /* Creations */,
+				8A5F306D24C2AB56002DE99B /* Structural */,
+				8A5D383824C0985B003B2824 /* Creational */,
 				8A5D380A24C09615003B2824 /* AppDelegate.swift */,
 				8A5D380C24C09615003B2824 /* ViewController.swift */,
 				8A5D380E24C09615003B2824 /* Main.storyboard */,
@@ -139,7 +141,7 @@
 			path = DesignPatternsUITests;
 			sourceTree = "<group>";
 		};
-		8A5D383824C0985B003B2824 /* Creations */ = {
+		8A5D383824C0985B003B2824 /* Creational */ = {
 			isa = PBXGroup;
 			children = (
 				8A5D383924C09D45003B2824 /* Singleton.swift */,
@@ -149,14 +151,15 @@
 				8AEBF1D324C19A1C00130B1C /* Prototype.swift */,
 				8AEBF1D524C19EF700130B1C /* ObjectPool.swift */,
 			);
-			path = Creations;
+			path = Creational;
 			sourceTree = "<group>";
 		};
-		8A5F306D24C2AB56002DE99B /* Behaviors */ = {
+		8A5F306D24C2AB56002DE99B /* Structural */ = {
 			isa = PBXGroup;
 			children = (
+				8A5F306E24C2B2EC002DE99B /* Adapter.swift */,
 			);
-			path = Behaviors;
+			path = Structural;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +301,7 @@
 				8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
 				8A3AD7A124C0BEA100FD4C30 /* Builder.swift in Sources */,
+				8A5F306F24C2B2EC002DE99B /* Adapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
