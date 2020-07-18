@@ -14,4 +14,5 @@
  -> ObjectPool: Quản lý việc tạo mới, tái sử dụng lại các đối tượng đã khởi tạo.
 
 * Nhớm cấu trúc:
-
+ -> Adapter: Xây dựng lớp trung gian(adapter) giúp cho các đối tượng khác nhau có thể hoạt động được với nhau.
+ -> Bridge: Chia nhỏ một class to thành các class con cùng nhóm chức năng -> hoạt động độc lập nhau -> giảm thiểu tác động.
