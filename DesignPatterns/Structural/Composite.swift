@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // PROBLEM: tree folder in os system
@@ -73,3 +74,4 @@ class Composite {
         return 1
     }
 }
+*/
