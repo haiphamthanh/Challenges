@@ -20,6 +20,7 @@
 		8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383B24C0A51B003B2824 /* Factory.swift */; };
 		8A5F306F24C2B2EC002DE99B /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F306E24C2B2EC002DE99B /* Adapter.swift */; };
 		8A5F307124C2CB72002DE99B /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F307024C2CB72002DE99B /* Bridge.swift */; };
+		8A5F307324C2D421002DE99B /* Composite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F307224C2D421002DE99B /* Composite.swift */; };
 		8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D324C19A1C00130B1C /* Prototype.swift */; };
 		8AEBF1D624C19EF700130B1C /* ObjectPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D524C19EF700130B1C /* ObjectPool.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		8A5D383B24C0A51B003B2824 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		8A5F306E24C2B2EC002DE99B /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
 		8A5F307024C2CB72002DE99B /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
+		8A5F307224C2D421002DE99B /* Composite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composite.swift; sourceTree = "<group>"; };
 		8AEBF1D324C19A1C00130B1C /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 		8AEBF1D524C19EF700130B1C /* ObjectPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 			children = (
 				8A5F306E24C2B2EC002DE99B /* Adapter.swift */,
 				8A5F307024C2CB72002DE99B /* Bridge.swift */,
+				8A5F307224C2D421002DE99B /* Composite.swift */,
 			);
 			path = Structural;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */,
 				8A3AD79F24C0B36900FD4C30 /* AbstractFactory.swift in Sources */,
 				8AEBF1D624C19EF700130B1C /* ObjectPool.swift in Sources */,
+				8A5F307324C2D421002DE99B /* Composite.swift in Sources */,
 				8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
 				8A3AD7A124C0BEA100FD4C30 /* Builder.swift in Sources */,

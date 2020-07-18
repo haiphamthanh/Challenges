@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // root Bank
@@ -74,3 +75,4 @@ class Bridge {
         return 1
     }
 }
+*/

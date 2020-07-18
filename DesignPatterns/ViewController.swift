@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let test = Bridge()
+        let test = Composite()
         test.main()
     }
 
