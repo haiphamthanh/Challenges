@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // Bài toán mua hàng
@@ -115,3 +116,5 @@ class Facade {
 // PROBLEM: Mua một sản phẩm nhưng có quá nhiều thủ tục phải hoàn thành
 // BUT: không biết nên hoàn thành thủ tục như thế nào?
 // SOLVE: Chỉ đưa ra cho người dùng những phương thức đơn giản, ẩn đi những phương thức rườm rà, logic code tùm lum khó hiểu.
+
+*/
