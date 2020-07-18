@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // B3: Action in vietnamese target
@@ -80,3 +81,5 @@ class Adapter {
         return 1
     }
 }
+
+ */

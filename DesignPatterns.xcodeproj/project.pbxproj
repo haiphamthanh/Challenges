@@ -19,6 +19,7 @@
 		8A5D383A24C09D45003B2824 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383924C09D45003B2824 /* Singleton.swift */; };
 		8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D383B24C0A51B003B2824 /* Factory.swift */; };
 		8A5F306F24C2B2EC002DE99B /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F306E24C2B2EC002DE99B /* Adapter.swift */; };
+		8A5F307124C2CB72002DE99B /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F307024C2CB72002DE99B /* Bridge.swift */; };
 		8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D324C19A1C00130B1C /* Prototype.swift */; };
 		8AEBF1D624C19EF700130B1C /* ObjectPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBF1D524C19EF700130B1C /* ObjectPool.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		8A5D383924C09D45003B2824 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		8A5D383B24C0A51B003B2824 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		8A5F306E24C2B2EC002DE99B /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		8A5F307024C2CB72002DE99B /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
 		8AEBF1D324C19A1C00130B1C /* Prototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prototype.swift; sourceTree = "<group>"; };
 		8AEBF1D524C19EF700130B1C /* ObjectPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				8A5F306E24C2B2EC002DE99B /* Adapter.swift */,
+				8A5F307024C2CB72002DE99B /* Bridge.swift */,
 			);
 			path = Structural;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A5F307124C2CB72002DE99B /* Bridge.swift in Sources */,
 				8A5D383C24C0A51B003B2824 /* Factory.swift in Sources */,
 				8A5D380D24C09615003B2824 /* ViewController.swift in Sources */,
 				8AEBF1D424C19A1C00130B1C /* Prototype.swift in Sources */,
