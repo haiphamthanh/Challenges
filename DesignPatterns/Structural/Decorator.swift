@@ -8,28 +8,85 @@
 
 import Foundation
 
-// Base class
-class Employee {
+// Abstract class
+class EmployeeComponent {
+    func fullName() -> String {
+        fatalError("Implement in subclass")
+    }
+    
     func doTask() {
+        fatalError("Implement in subclass")
     }
     
     func join() {
+        fatalError("Implement in subclass")
     }
     
     func terminate() {
+        fatalError("Implement in subclass")
     }
 }
 
-// Class based role
-class TeamMember: Employee {
+// Basic informations about employee
+class EmployeeConcreteComponent: EmployeeComponent {
+    let name: String
+    init(name: String) {
+        self.name = name
+    }
+    
+    override func fullName() -> String {
+        return name
+    }
+    
+    override func doTask() {
+        // Unassigned task
+    }
+    
+    override func join() {
+    }
+    
+    override func terminate() {
+    }
+}
+
+//SOLVE 1: Decorator phải được thiết kế giống theo kiểu đệ quy vô tận
+class EmployeeDecorator: EmployeeComponent {
+    //SOLVE 2: IMPORTANT
+    private let employee: EmployeeComponent
+    init(employee: EmployeeComponent) {
+        self.employee = employee
+    }
+    
+    override func doTask() {
+        return employee.doTask()
+    }
+    
+    override func join() {
+        return employee.join()
+    }
+    
+    override func terminate() {
+        return employee.terminate()
+    }
+}
+
+// Add more behavior into object
+class TeamMember: EmployeeDecorator {
     func reportTask() {
     }
     
     func coordinateWithOthers() {
     }
+    
+    override func doTask() {
+        super.doTask()
+        
+        reportTask()
+        return coordinateWithOthers()
+    }
 }
 
-class TeamLeader: Employee {
+class TeamLeader: EmployeeDecorator {
     func planning() {
     }
     
@@ -38,9 +95,17 @@ class TeamLeader: Employee {
     
     func monitor() {
     }
+    
+    override func doTask() {
+        super.doTask()
+        
+        planning()
+        motivate()
+        return monitor()
+    }
 }
 
-class Manager: Employee {
+class Manager: EmployeeDecorator {
     func createRequirement() {
     }
     
@@ -48,6 +113,14 @@ class Manager: Employee {
     }
     
     func manageProgress() {
+    }
+    
+    override func doTask() {
+        super.doTask()
+        
+        createRequirement()
+        assignTask()
+        return manageProgress()
     }
 }
 
@@ -58,6 +131,23 @@ class Manager: Employee {
 // Final class
 class Decorator {
     func main() -> Int {
+        
+        // The first year is a fresher
+        let employee = EmployeeConcreteComponent(name: "Jackie")
+        
+        // The first year is a member
+        let member = TeamMember(employee: employee)
+        
+        // Second year is a teamleader
+        let leader = TeamLeader(employee: member)
+        
+        // Third year is a manager
+        let manager = Manager(employee: leader)
+        
+        // Do task as level
+        employee.doTask()
+        leader.doTask()
+        manager.doTask()
         return 1
     }
 }
