@@ -6,6 +6,7 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
+/*
 import Foundation
 
 // Abstract class
@@ -151,3 +152,4 @@ class Decorator {
         return 1
     }
 }
+*/
