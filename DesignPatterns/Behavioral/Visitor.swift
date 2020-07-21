@@ -7,22 +7,47 @@
 //
 
 import Foundation
-class Book {
+
+protocol CustomerBehavior {
+    func buy(book: Book)
+    func buy(book: HistoryBook)
+    func buy(book: ProgrammingBook)
+    func buy(book: ArtistBook)
+}
+
+protocol BookBehavior {
+    func accept(cus: CustomerBehavior)
+}
+
+class Book: BookBehavior {
+    func accept(cus: CustomerBehavior) {
+        return cus.buy(book: self)
+    }
+    
     func desc() {
         print("This is \(self) book")
     }
 }
 
 class HistoryBook: Book {
+    override func accept(cus: CustomerBehavior) {
+        return cus.buy(book: self)
+    }
 }
 
 class ProgrammingBook: Book {
+    override func accept(cus: CustomerBehavior) {
+        return cus.buy(book: self)
+    }
 }
 
 class ArtistBook: Book {
+    override func accept(cus: CustomerBehavior) {
+        return cus.buy(book: self)
+    }
 }
 
-class Customer {
+class Customer: CustomerBehavior {
     func buy(book: Book) {
         print("\(#function) Book was called")
         return book.desc()
@@ -47,10 +72,19 @@ class Customer {
 // Final calls
 class Visitor {
     func main() -> Int {
-        let cus = Customer()
+        let cus: CustomerBehavior = Customer()
         
+        // OLD:
+        print("Buy in old way")
         let book: Book = HistoryBook()
         cus.buy(book: book)
+        
+        print("\n")
+        
+        // NEW:
+        print("Buy in new way")
+        let newBook: Book = HistoryBook()
+        newBook.accept(cus: cus)
         
         return 1
     }
