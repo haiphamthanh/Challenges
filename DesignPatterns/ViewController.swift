@@ -13,7 +13,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let cm = Command()
+        let cm = Visitor()
         cm.main()
     }
 }
