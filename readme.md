@@ -23,4 +23,10 @@
  -> Flyweight:
 
 * Nhóm hành vi:
- ->
+ -> Template function: Công việc thường làm, giải pháp cung cấp cho việc giải quyết vấn đề code lặp, các logic đi chung một hướng nhưng chỉ cần thay đổi một phần nhỏ trong logic để tuỳ biến theo từng đối tượng(dựa trên 1 đối tượng cha).
+ -> Visitor: Trong hướng đối tượng có một tính chất mà nếu không sử dụng cẩn thận sẽ dẫn đến lỗi mà ta không ngờ đó là tính Overload của function. 
+ 	-> Giả sử đối tượng A có tập các functions tên là "muaSach", các đối tượng {B -> B1 -> B2 -> Bn} có thể là các loại sách khác nhau nhưng được kế thừa từ 1 đối tượng gốc là B là input của function "muaSach" => B có thể được khai báo và định nghĩa bằng B1, B2 hoặc Bn.
+ 	-> Vấn đề: đối tượng sách được mua là B1 hay Bn đi chăng nữa nhưng dược khai báo là B thì đối số được dùng cho input lúc này vẫn được xem là B(mặc dù vùng nhớ của nó được khai báo là B1 hay Bn)
+ 	-> Giải quyết:
+ 		C1: Khai báo đúng kiểu dữ liệu(Cách này củ chuối vì không nhất thiết khi khai báo ta phải khai báo cụ thể loại sách nào).
+ 		C2: Double dispatch -> Ta thay cụm từ "A mua sách B" bằng "Sách B được A mua".
