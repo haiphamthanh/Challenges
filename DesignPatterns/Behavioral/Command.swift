@@ -15,41 +15,80 @@ protocol ActionCommand {
 
 // B3: Create Commands
 class OpenAccountCommand: ActionCommand {
+    private let account: Account
+    init(account: Account) {
+        self.account = account
+    }
+    
     func exec() -> Bool {
-        print("Open new account")
-        return true
+        return account.open()
     }
 }
 
 class CloseAccountCommand: ActionCommand {
+    private let account: Account
+    init(account: Account) {
+        self.account = account
+    }
+    
     func exec() -> Bool {
-        print("Close account")
+        return account.close()
+    }
+}
+
+// B4: Create actor that command impact to
+class Account {
+    let name: String
+    init(name: String) {
+        self.name = name
+    }
+    
+    func infor() {
+        print("I am \(name)")
+    }
+    
+    // Account functions
+    func open() -> Bool {
+        print("Account was opened with name is \(name)")
+        return true
+    }
+    
+    func close() -> Bool {
+        print("Account with \(name) gonna be closed")
         return true
     }
 }
 
 // B1: Create 脚本 to use
 class BankApp {
-    private let openAccountCM: ActionCommand
-    private let closeAccountCM: ActionCommand
-    
-    init(openAccountCM: ActionCommand, closeAccountCM: ActionCommand) {
-        self.openAccountCM = openAccountCM
-        self.closeAccountCM = closeAccountCM
+    private let registedCommand: ActionCommand?
+    init(registedCommand: ActionCommand? = nil) {
+        self.registedCommand = registedCommand
     }
     
-    func openAccount() -> Bool {
-        return openAccountCM.exec()
-    }
-    
-    func closeAccount() -> Bool {
-        return closeAccountCM.exec()
+    func okandRun() -> Bool? {
+        return registedCommand?.exec()
     }
 }
 
 // Final class
 class Command {
     func main() -> Int {
+        // Hey this is my account infor, I want to make an account
+        let accountInfor = Account(name: "Tài")
+        
+        // I am the banker, can I help you?
+        // If you want to make a new account, let you register action by hand
+        let openAC = OpenAccountCommand(account: accountInfor)
+        let bankerFirst = BankApp(registedCommand: openAC)
+        bankerFirst.okandRun()
+        
+        // I am the banker, can I help you?
+        // If you want to close my account, let you register action by hand
+        let closeAC = CloseAccountCommand(account: accountInfor)
+        let bankerSeccond = BankApp(registedCommand: closeAC)
+        bankerSeccond.okandRun()
+        
         return 1
     }
 }
