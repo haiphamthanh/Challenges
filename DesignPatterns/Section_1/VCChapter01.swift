@@ -57,10 +57,20 @@ private extension VCChapter01 {
     }
 	
 	func moveInTitle() {
+		// Show tille first
 		UIView.animate(withDuration: 0.5) {
 			self.heading.center.x += self.view.bounds.width
-			self.userName.center.x += self.view.bounds.width
 		}
+		
+		// Next show username field
+		UIView.animate(withDuration: 0.5, delay: 0.3, options: [], animations: {
+			self.userName.center.x += self.view.bounds.width
+		}, completion: nil)
+		
+		// Finally, show password field
+		UIView.animate(withDuration: 0.5, delay: 0.4, options: [], animations: {
+			self.password.center.x += self.view.bounds.width
+		}, completion: nil)
 	}
 }
 
