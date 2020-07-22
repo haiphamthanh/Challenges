@@ -41,6 +41,7 @@ class VCChapter01: BaseViewControllerSection01 {
         
         moveOutInputScreen()
 		disableCloud()
+		disableLoginButton()
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -48,6 +49,7 @@ class VCChapter01: BaseViewControllerSection01 {
 		
 		moveInTitle()
 		fadeInCloud()
+		fadeInLoginButton()
 	}
 }
 
@@ -82,6 +84,12 @@ private extension VCChapter01 {
 		cloud4.alpha = 0.0
 	}
 	
+	func disableLoginButton() {
+		// Move button down 30pt and hide it
+		loginButton.center.y += 30
+		loginButton.alpha = 0.0
+	}
+	
 	func fadeInCloud() {
 		UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
 			self.cloud1.alpha = 1.0
@@ -94,6 +102,13 @@ private extension VCChapter01 {
 		}, completion: nil)
 		UIView.animate(withDuration: 0.5, delay: 1.1, options: [], animations: {
 			self.cloud4.alpha = 1.0
+		}, completion: nil)
+	}
+	
+	func fadeInLoginButton() {
+		UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [], animations: {
+			self.loginButton.center.y -= 30.0
+			self.loginButton.alpha = 1.0
 		}, completion: nil)
 	}
 }
