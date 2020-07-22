@@ -72,6 +72,16 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="PDT-MP-9mD"/>
                     </view>
+                    <connections>
+                        <outlet property="cloud1" destination="LC0-X9-wfx" id="Wna-dP-fab"/>
+                        <outlet property="cloud2" destination="nJB-tT-Mh4" id="KYN-gE-EDZ"/>
+                        <outlet property="cloud3" destination="wUp-pT-RSl" id="RcW-dg-Nfg"/>
+                        <outlet property="cloud4" destination="tPC-dc-Ms3" id="4eK-wz-ZkZ"/>
+                        <outlet property="heading" destination="TLV-13-h25" id="nKB-tg-7HK"/>
+                        <outlet property="loginButton" destination="nzO-IS-YbP" id="TG6-Mb-RCg"/>
+                        <outlet property="password" destination="LR2-bn-44m" id="buV-63-yqX"/>
+                        <outlet property="userName" destination="6JY-nx-ZWb" id="2pI-iX-7cp"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="262.80193236714979" y="245.33035714285714"/>
