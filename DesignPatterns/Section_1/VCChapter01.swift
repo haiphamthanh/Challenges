@@ -8,16 +8,32 @@
 
 // Chapter 1: View Animations
 import UIKit
+import PromiseKit
 
 enum ProcessingState: String {
+	case noAuth = "No Authorization"
 	case connecting = "Connecting..."
-	case auth = "Authorizing..."
 	case sendingCre = "Sending credentials..."
-	case done = "Done"
+	case authorized = "Authorized"
 	case failed = "Failed"
 	
 	var mssg: String {
 		return rawValue
+	}
+	
+	var next: ProcessingState {
+		switch self {
+		case .noAuth:
+			return .connecting
+		case .connecting:
+			return .sendingCre
+		case .sendingCre:
+			return .sendingCre
+		case .authorized:
+			return .authorized
+		case .failed:
+			return .noAuth
+		}
 	}
 }
 
@@ -48,7 +64,7 @@ class VCChapter01: BaseViewControllerSection01 {
 	let label = UILabel()
 	
 	var statusPosition = CGPoint.zero
-	var processingState = ProcessingState.done {
+	var processingState = ProcessingState.noAuth {
 		didSet {
 			return change(state: processingState)
 		}
@@ -72,9 +88,9 @@ class VCChapter01: BaseViewControllerSection01 {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		moveInTitle()
-		fadeInCloud()
-		fadeInLoginButton()
+		_ = moveInTitle()
+		_ = fadeInCloud()
+		_ = fadeInLoginButton()
 	}
 }
 
@@ -85,21 +101,27 @@ private extension VCChapter01 {
 		password.center.x -= view.bounds.width
 	}
 	
-	func moveInTitle() {
-		// Show tille first
-		UIView.animate(withDuration: 0.5) {
-			self.heading.center.x += self.view.bounds.width
+	func moveInTitle() -> Promise<Bool> {
+		return Promise { seal in
+			// Show tille first
+			UIView.animate(.promise, duration: 0.5, animations: {
+				self.heading.center.x += self.view.bounds.width
+			})
+			
+			// Next show username field
+			UIView.animate(.promise, duration: 0.5, delay: 0.3, options: [], animations: {
+				self.userName.center.x += self.view.bounds.width
+			})
+			
+			// Finally, show password field
+			UIView
+				.animate(.promise, duration: 0.5, delay: 0.4, options: [], animations: {
+					self.password.center.x += self.view.bounds.width
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
 		}
-		
-		// Next show username field
-		UIView.animate(withDuration: 0.5, delay: 0.3, options: [], animations: {
-			self.userName.center.x += self.view.bounds.width
-		}, completion: nil)
-		
-		// Finally, show password field
-		UIView.animate(withDuration: 0.5, delay: 0.4, options: [], animations: {
-			self.password.center.x += self.view.bounds.width
-		}, completion: nil)
 	}
 	
 	func disableCloud() {
@@ -115,171 +137,214 @@ private extension VCChapter01 {
 		loginButton.alpha = 0.0
 	}
 	
-	func fadeInCloud() {
-		UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
-			self.cloud1.alpha = 1.0
-		}, completion: nil)
-		
-		UIView.animate(withDuration: 0.5, delay: 0.7, options: [], animations: {
-			self.cloud2.alpha = 1.0
-		}, completion: nil)
-		
-		UIView.animate(withDuration: 0.5, delay: 0.9, options: [], animations: {
-			self.cloud3.alpha = 1.0
-		}, completion: nil)
-		
-		UIView.animate(withDuration: 0.5, delay: 1.1, options: [], animations: {
-			self.cloud4.alpha = 1.0
-		}, completion: nil)
-	}
-	
-	func fadeInLoginButton() {
-		UIView.animate(withDuration: 0.5,
-					   delay: 0.5,
-					   usingSpringWithDamping: 0.5,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						self.loginButton.center.y -= 30.0
-						self.loginButton.alpha = 1.0
-		}, completion: nil)
-	}
-	
-	func increaseButtonSize(completion: ((Bool) -> Void)? = nil) {
-		UIView.animate(withDuration: 1.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.2,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						self.loginButton.bounds.size.width += 80.0
-		}, completion: nil)
-		
-		UIView.animate(withDuration: 0.33,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.7,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						let loginBtnColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1.0)
-						self.loginButton.center.y += 60
-						self.loginButton.backgroundColor = loginBtnColor
-						
-						let xAxis = CGFloat(40)
-						let yAxis = self.loginButton.frame.size.height / 2.0
-						self.spinner.center = CGPoint(x: xAxis, y: yAxis)
-						self.spinner.alpha = 1.0
-		}, completion: completion)
-	}
-	
-	func restoreButtonSize(completion: ((Bool) -> Void)? = nil) {
-		UIView.animate(withDuration: 1.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.2,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						self.loginButton.bounds.size.width -= 80.0
-		}, completion: nil)
-		
-		UIView.animate(withDuration: 0.33,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.7,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						let loginBtnColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
-						self.loginButton.center.y -= 60
-						self.loginButton.backgroundColor = loginBtnColor
-						
-						self.spinner.center = CGPoint(x: -20.0, y: 16.0)
-						self.spinner.alpha = 0.0
-		}, completion: completion)
-	}
-	
-	func changeSize(textField: UITextField, isSketch: Bool) {
-		UIView.animate(withDuration: 0.7,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.2,
-					   initialSpringVelocity: 0.0,
-					   options: [],
-					   animations: {
-						textField.bounds.size.width += isSketch ? 40 : -40
-		}, completion: nil)
-	}
-	
-	func transitionSample() {
-		let newView = UIImageView(image: UIImage(named: "banner"))
-		newView.center = animationContainerView.center
-		
-		UIView.transition(with: animationContainerView,
-						  duration: 0.33,
-						  options: [.curveEaseOut, .transitionFlipFromBottom],
-						  animations: {
-							self.animationContainerView.addSubview(newView)
-		}, completion: nil)
-		
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-			UIView.transition(with: self.animationContainerView,
-							  duration: 0.33,
-							  options: [.curveEaseOut, .transitionFlipFromBottom],
-							  animations: {
-								newView.removeFromSuperview()
-			}, completion: nil)
+	func fadeInCloud() -> Promise<Bool> {
+		return Promise { seal in
+			UIView.animate(.promise, duration: 0.5, delay: 0.5, options: [], animations: {
+				self.cloud1.alpha = 1.0
+			})
+			
+			UIView.animate(.promise, duration: 0.5, delay: 0.7, options: [], animations: {
+				self.cloud2.alpha = 1.0
+			})
+			
+			UIView.animate(.promise, duration: 0.5, delay: 0.9, options: [], animations: {
+				self.cloud3.alpha = 1.0
+			})
+			
+			UIView
+				.animate(.promise, duration: 0.5, delay: 1.1, options: [], animations: {
+					self.cloud4.alpha = 1.0
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
 		}
 	}
 	
-	func show(mssg: String, completion: ((Bool) -> Void)? = nil) {
-		label.text = mssg
-		
-		UIView.transition(with: status,
-						  duration: 0.33,
-						  options: [.curveEaseOut, .transitionCurlDown],
-						  animations: {
-							self.status.isHidden = false
-		}, completion: completion)
+	func fadeInLoginButton() -> Promise<Bool> {
+		return Promise { seal in
+			UIView
+				.animate(.promise,
+						 duration: 0.5,
+						 delay: 0.5,
+						 usingSpringWithDamping: 0.5,
+						 initialSpringVelocity: 0.0,
+						 animations: {
+							self.loginButton.center.y -= 30.0
+							self.loginButton.alpha = 1.0
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
+		}
 	}
 	
-	func hideMessage(mssg: String, completion: ((Bool) -> Void)? = nil) {
-		UIView.transition(with: label,
-						  duration: 0.33,
-						  options: .transitionFlipFromTop,
-						  animations: {
-							self.label.text = mssg
-		}, completion: { _ in
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-				UIView.transition(with: self.status,
-								  duration: 0.33,
-								  options: [.curveEaseOut, .transitionCurlUp],
-								  animations: {
-									self.status.isHidden = true
-				}, completion: completion)
+	func increaseButtonSize() -> Promise<Bool> {
+		return Promise { seal in
+			UIView
+				.animate(.promise,
+						 duration: 1.5,
+						 delay: 0.0,
+						 usingSpringWithDamping: 0.2,
+						 initialSpringVelocity: 0.0,
+						 animations: {
+							self.loginButton.bounds.size.width += 80.0
+				})
+			
+			UIView
+				.animate(.promise,
+						 duration: 0.33,
+						 delay: 0.0,
+						 usingSpringWithDamping: 0.7,
+						 initialSpringVelocity: 0.0,
+						 animations: {
+							let loginBtnColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1.0)
+							self.loginButton.center.y += 60
+							self.loginButton.backgroundColor = loginBtnColor
+							
+							let xAxis = CGFloat(40)
+							let yAxis = self.loginButton.frame.size.height / 2.0
+							self.spinner.center = CGPoint(x: xAxis, y: yAxis)
+							self.spinner.alpha = 1.0
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
+	
+	func restoreButtonSize() -> Promise<Bool> {
+		return Promise { seal in
+			UIView
+				.animate(.promise, duration: 1.5, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, animations: {
+					self.loginButton.bounds.size.width -= 80.0
+				})
+			
+			UIView
+				.animate(.promise, duration: 0.33, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, animations: {
+					let loginBtnColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
+					self.loginButton.center.y -= 60
+					self.loginButton.backgroundColor = loginBtnColor
+					
+					self.spinner.center = CGPoint(x: -20.0, y: 16.0)
+					self.spinner.alpha = 0.0
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
+	
+	func changeSize(textField: UITextField, isSketch: Bool) -> Promise<Bool> {
+		return Promise { seal in
+			UIView
+				.animate(.promise,
+						 duration: 0.7,
+						 delay: 0.0,
+						 usingSpringWithDamping: 0.2,
+						 initialSpringVelocity: 0.0,
+						 animations: {
+							textField.bounds.size.width += isSketch ? 40 : -40
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
+	
+	func transitionSample() -> Promise<Bool> {
+		return Promise { seal in
+			let newView = UIImageView(image: UIImage(named: "banner"))
+			newView.center = animationContainerView.center
+			
+			UIView
+				.transition(.promise,
+							with: animationContainerView,
+							duration: 0.33,
+							options: [.curveEaseOut, .transitionFlipFromBottom],
+							animations: {
+								self.animationContainerView.addSubview(newView)
+				})
+			
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+				UIView
+					.transition(.promise,
+								with: self.animationContainerView,
+								duration: 0.33,
+								options: [.curveEaseOut, .transitionFlipFromBottom],
+								animations: {
+									newView.removeFromSuperview()
+					})
+					.done({ isCompleted in
+						seal.fulfill(isCompleted)
+					})
 			}
-		})
+		}
+	}
+	
+	func show(mssg: String) -> Promise<Bool> {
+		return Promise { seal in
+			label.text = mssg
+			
+			UIView
+				.transition(.promise,
+							with: status,
+							duration: 0.33,
+							options: [.curveEaseOut, .transitionCurlDown],
+							animations: {
+								self.status.isHidden = false
+				})
+				.done({ isCompleted in
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
+	
+	func removeMessage(_ mssg: String) -> Promise<Bool> {
+		let chainProcess: Promise<Bool> = Promise { seal in
+			UIView
+				.animate(.promise, duration: 0.33, animations: {
+					self.status.center.x += self.view.frame.size.width
+				})
+				.done({ isCompleted in
+					self.status.isHidden = true
+					self.status.center = self.statusPosition
+					
+					seal.fulfill(isCompleted)
+				})
+		}
 		
+		return chainProcess
 	}
 	
 	func change(state: ProcessingState) {
 		switch state {
-		case .auth:
-			break
+		case .noAuth:
+			return
 		case .connecting:
 			lockInput()
-			increaseButtonSize { (_) in
-				let mssg = state.mssg
-				self.show(mssg: mssg)
-			}
-		case .sendingCre:
-			break
-		case .done:
-			let mssg = state.mssg
-			hideMessage(mssg: mssg) { _ in
-				self.restoreButtonSize(completion: { _ in
-					self.unlockInput()
+			increaseButtonSize()
+				.compactMap({ _ -> Promise<Bool> in
+					let mssg = state.mssg
+					return self.show(mssg: mssg)
 				})
-			}
+				.catch({ err in
+					print(err.localizedDescription)
+				})
+		case .sendingCre:
+			return
+		case .authorized:
+			let mssg = state.mssg
+			removeMessage(mssg)
+				.map({ _ -> Void in })
+				.compactMap(restoreButtonSize)
+				.done { _ in
+					self.unlockInput()
+				}.catch({ err in
+					print(err.localizedDescription)
+				})
 		case .failed:
-			break
+			return
 		}
 	}
 }
@@ -307,6 +372,7 @@ private extension VCChapter01 {
 		
 		userName.delegate = self
 		password.delegate = self
+		statusPosition = status.center
 		
 		loginButton.addSubview(spinner)
 		status.addSubview(label)
@@ -318,11 +384,11 @@ private extension VCChapter01 {
 	
 	@objc func login(sender: UIButton!) {
 		connect()
-		
-		// Wait in 5 secconds
-		DispatchQueue
-			.main
-			.asyncAfter(deadline: .now() + 5, execute: done)
+			.compactMap(didReceived)
+			.done({ _ -> Void in })
+			.catch({ err in
+				print(err.localizedDescription)
+		})
 	}
 	
 	@objc func endEditing() {
@@ -353,21 +419,33 @@ private extension VCChapter01 {
 
 // Actions
 private extension VCChapter01 {
-	func connect() {
-		processingState = .connecting
+	func connect() -> Promise<Bool> {
+		return Promise { seal in
+			processingState = .connecting
+			
+			// Wait in 5 secconds and push temporary data
+			DispatchQueue
+				.global()
+				.asyncAfter(deadline: .now() + 5, execute: {
+					seal.fulfill(true)
+				})
+		}
 	}
 	
-	func done() {
-		processingState = .done
+	func didReceived(_ connectState: Bool) -> Promise<Void> {
+		return Promise { seal in
+			processingState = connectState ? .authorized : .noAuth
+			return seal.fulfill_()
+		}
 	}
 }
 
 extension VCChapter01: UITextFieldDelegate {
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		changeSize(textField: textField, isSketch: true)
+		_ = changeSize(textField: textField, isSketch: true)
 	}
 	
 	func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-		changeSize(textField: textField, isSketch: false)
+		_ = changeSize(textField: textField, isSketch: false)
 	}
 }
