@@ -57,6 +57,15 @@ class VCChapter01: BaseViewControllerSection01 {
 		
 		return tempView
 	}()
+	lazy var animations: [UIView.AnimationOptions] = {
+		return [.transitionFlipFromLeft,
+				.transitionFlipFromRight,
+				.transitionCurlUp,
+				.transitionCurlDown,
+				.transitionCrossDissolve,
+				.transitionFlipFromTop,
+				.transitionFlipFromBottom]
+	}()
 	
 	// MARK: Further UI
 	let spinner = UIActivityIndicatorView(style: .whiteLarge)
@@ -91,6 +100,7 @@ class VCChapter01: BaseViewControllerSection01 {
 		_ = moveInTitle()
 		_ = fadeInCloud()
 		_ = fadeInLoginButton()
+		animateClouds()
 	}
 }
 
@@ -290,7 +300,7 @@ private extension VCChapter01 {
 				.transition(.promise,
 							with: status,
 							duration: 0.33,
-							options: [.curveEaseOut, .transitionCurlDown],
+							options: [.curveEaseOut, animations.randomElement()!],
 							animations: {
 								self.status.isHidden = false
 				})
@@ -302,19 +312,47 @@ private extension VCChapter01 {
 	
 	func removeMessage(_ mssg: String) -> Promise<Bool> {
 		let chainProcess: Promise<Bool> = Promise { seal in
-			UIView
-				.animate(.promise, duration: 0.33, animations: {
-					self.status.center.x += self.view.frame.size.width
-				})
-				.done({ isCompleted in
-					self.status.isHidden = true
-					self.status.center = self.statusPosition
-					
-					seal.fulfill(isCompleted)
-				})
+			label.text = mssg
+			
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+				UIView
+					.animate(.promise, duration: 0.33, animations: {
+						self.status.center.x += self.view.frame.size.width
+					})
+					.done({ isCompleted in
+						self.status.isHidden = true
+						self.status.center = self.statusPosition
+						
+						seal.fulfill(isCompleted)
+					})
+			})
 		}
 		
 		return chainProcess
+	}
+	
+	func animateClouds() {
+		_ = animateCloud(cloud1)
+		_ = animateCloud(cloud2)
+		_ = animateCloud(cloud3)
+		_ = animateCloud(cloud4)
+	}
+	
+	func animateCloud(_ cloud: UIImageView) {
+		let cloudSpeed = 60.0 / self.view.frame.size.width
+		let duration = (self.view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
+		
+		let completion:(Bool) -> () = { _ in
+			cloud.frame.origin.x = -cloud.frame.size.width
+			self.animateCloud(cloud)
+		}
+		
+		UIView.animate(withDuration: TimeInterval(duration),
+					   delay: 0.0,
+					   options: .curveLinear,
+					   animations: {
+						cloud.frame.origin.x = self.view.frame.size.width
+		},completion: completion)
 	}
 	
 	func change(state: ProcessingState) {
@@ -333,7 +371,7 @@ private extension VCChapter01 {
 				})
 		case .sendingCre:
 			return
-		case .authorized:
+		case .authorized, .failed:
 			let mssg = state.mssg
 			removeMessage(mssg)
 				.map({ _ -> Void in })
@@ -343,8 +381,6 @@ private extension VCChapter01 {
 				}.catch({ err in
 					print(err.localizedDescription)
 				})
-		case .failed:
-			return
 		}
 	}
 }
@@ -427,14 +463,14 @@ private extension VCChapter01 {
 			DispatchQueue
 				.global()
 				.asyncAfter(deadline: .now() + 5, execute: {
-					seal.fulfill(true)
+					seal.fulfill(false)
 				})
 		}
 	}
 	
 	func didReceived(_ connectState: Bool) -> Promise<Void> {
 		return Promise { seal in
-			processingState = connectState ? .authorized : .noAuth
+			processingState = connectState ? .authorized : .failed
 			return seal.fulfill_()
 		}
 	}
