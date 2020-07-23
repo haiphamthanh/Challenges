@@ -9,6 +9,18 @@
 // Chapter 1: View Animations
 import UIKit
 
+enum ProcessingState: String {
+	case connecting = "Connecting..."
+	case auth = "Authorizing..."
+	case sendingCre = "Sending credentials..."
+	case done = "Done"
+	case failed = "Failed"
+	
+	var mssg: String {
+		return rawValue
+	}
+}
+
 class VCChapter01: BaseViewControllerSection01 {
 	// MARK: IB Outlets
 	@IBOutlet private weak var loginButton: UIButton!
@@ -21,13 +33,26 @@ class VCChapter01: BaseViewControllerSection01 {
 	@IBOutlet private weak var cloud3: UIImageView!
 	@IBOutlet private weak var cloud4: UIImageView!
 	
+	lazy var animationContainerView: UIView = {
+		var tempView = UIView(frame: view.bounds)
+		tempView.frame = view.bounds
+		tempView.backgroundColor = .red
+		view.addSubview(tempView)
+		
+		return tempView
+	}()
+	
 	// MARK: Further UI
 	let spinner = UIActivityIndicatorView(style: .whiteLarge)
 	let status = UIImageView(image: UIImage(named: "banner"))
 	let label = UILabel()
-	let message = ["Connecting...", "Authorizing...", "Sending credentials...", "Failed"]
 	
 	var statusPosition = CGPoint.zero
+	var processingState = ProcessingState.done {
+		didSet {
+			return change(state: processingState)
+		}
+	}
 	
 	// MARK: View life cycles
 	override func viewDidLoad() {
@@ -120,7 +145,7 @@ private extension VCChapter01 {
 		}, completion: nil)
 	}
 	
-	func increaseButtonSize() {
+	func increaseButtonSize(completion: ((Bool) -> Void)? = nil) {
 		UIView.animate(withDuration: 1.5,
 					   delay: 0.0,
 					   usingSpringWithDamping: 0.2,
@@ -144,7 +169,32 @@ private extension VCChapter01 {
 						let yAxis = self.loginButton.frame.size.height / 2.0
 						self.spinner.center = CGPoint(x: xAxis, y: yAxis)
 						self.spinner.alpha = 1.0
+		}, completion: completion)
+	}
+	
+	func restoreButtonSize(completion: ((Bool) -> Void)? = nil) {
+		UIView.animate(withDuration: 1.5,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.2,
+					   initialSpringVelocity: 0.0,
+					   options: [],
+					   animations: {
+						self.loginButton.bounds.size.width -= 80.0
 		}, completion: nil)
+		
+		UIView.animate(withDuration: 0.33,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.7,
+					   initialSpringVelocity: 0.0,
+					   options: [],
+					   animations: {
+						let loginBtnColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
+						self.loginButton.center.y -= 60
+						self.loginButton.backgroundColor = loginBtnColor
+						
+						self.spinner.center = CGPoint(x: -20.0, y: 16.0)
+						self.spinner.alpha = 0.0
+		}, completion: completion)
 	}
 	
 	func changeSize(textField: UITextField, isSketch: Bool) {
@@ -156,6 +206,81 @@ private extension VCChapter01 {
 					   animations: {
 						textField.bounds.size.width += isSketch ? 40 : -40
 		}, completion: nil)
+	}
+	
+	func transitionSample() {
+		let newView = UIImageView(image: UIImage(named: "banner"))
+		newView.center = animationContainerView.center
+		
+		UIView.transition(with: animationContainerView,
+						  duration: 0.33,
+						  options: [.curveEaseOut, .transitionFlipFromBottom],
+						  animations: {
+							self.animationContainerView.addSubview(newView)
+		}, completion: nil)
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			UIView.transition(with: self.animationContainerView,
+							  duration: 0.33,
+							  options: [.curveEaseOut, .transitionFlipFromBottom],
+							  animations: {
+								newView.removeFromSuperview()
+			}, completion: nil)
+		}
+	}
+	
+	func show(mssg: String, completion: ((Bool) -> Void)? = nil) {
+		label.text = mssg
+		
+		UIView.transition(with: status,
+						  duration: 0.33,
+						  options: [.curveEaseOut, .transitionCurlDown],
+						  animations: {
+							self.status.isHidden = false
+		}, completion: completion)
+	}
+	
+	func hideMessage(mssg: String, completion: ((Bool) -> Void)? = nil) {
+		UIView.transition(with: label,
+						  duration: 0.33,
+						  options: .transitionFlipFromTop,
+						  animations: {
+							self.label.text = mssg
+		}, completion: { _ in
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+				UIView.transition(with: self.status,
+								  duration: 0.33,
+								  options: [.curveEaseOut, .transitionCurlUp],
+								  animations: {
+									self.status.isHidden = true
+				}, completion: completion)
+			}
+		})
+		
+	}
+	
+	func change(state: ProcessingState) {
+		switch state {
+		case .auth:
+			break
+		case .connecting:
+			lockInput()
+			increaseButtonSize { (_) in
+				let mssg = state.mssg
+				self.show(mssg: mssg)
+			}
+		case .sendingCre:
+			break
+		case .done:
+			let mssg = state.mssg
+			hideMessage(mssg: mssg) { _ in
+				self.restoreButtonSize(completion: { _ in
+					self.unlockInput()
+				})
+			}
+		case .failed:
+			break
+		}
 	}
 }
 
@@ -187,16 +312,53 @@ private extension VCChapter01 {
 		status.addSubview(label)
 		view.addSubview(status)
 		
-		let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.touchOut))
+		let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.endEditing))
 		view.addGestureRecognizer(viewTap)
 	}
 	
 	@objc func login(sender: UIButton!) {
-		increaseButtonSize()
+		connect()
+		
+		// Wait in 5 secconds
+		DispatchQueue
+			.main
+			.asyncAfter(deadline: .now() + 5, execute: done)
 	}
 	
-	@objc func touchOut() {
+	@objc func endEditing() {
 		view.endEditing(true)
+	}
+	
+	func lockInput() {
+		endEditing()
+		userName.isEnabled = false
+		password.isEnabled = false
+		
+		userName.backgroundColor = .lightGray
+		password.backgroundColor = .lightGray
+		
+		loginButton.isEnabled = false
+	}
+	
+	func unlockInput() {
+		userName.isEnabled = true
+		password.isEnabled = true
+		
+		userName.backgroundColor = .white
+		password.backgroundColor = .white
+		
+		loginButton.isEnabled = true
+	}
+}
+
+// Actions
+private extension VCChapter01 {
+	func connect() {
+		processingState = .connecting
+	}
+	
+	func done() {
+		processingState = .done
 	}
 }
 
