@@ -68,19 +68,90 @@ private extension VCChapter04 {
 				})
 		}
 	}
+	
+	func cubeTransition(label: UILabel, text: String, direction: AnimationDirection) -> Promise<Bool> {
+		return Promise { seal in
+			let auxLabel = UILabel(frame: label.frame)
+			auxLabel.text = text
+			auxLabel.font = label.font
+			auxLabel.textColor = label.textColor
+			auxLabel.textAlignment = label.textAlignment
+			auxLabel.backgroundColor = label.backgroundColor
+			
+			let auxLabelOffset = CGFloat(direction.rawValue) * label.frame.size.height / 2.0
+			auxLabel.transform = CGAffineTransform(scaleX: 1.0, y: 0.1)
+				.concatenating(CGAffineTransform(translationX: 0.0, y: auxLabelOffset))
+			
+			label.superview?.addSubview(auxLabel)
+			
+			UIView
+				.animate(.promise,
+						 duration: 0.5,
+						 delay: 0.0,
+						 options: .curveEaseOut,
+						 animations: {
+							auxLabel.transform = .identity
+							label.transform = CGAffineTransform(scaleX: 1.0, y: 0.1)
+								.concatenating(CGAffineTransform(translationX: 0.0, y: -auxLabelOffset))
+				})
+				.done({ isCompleted in
+					label.text = auxLabel.text
+					label.transform = .identity
+					
+					auxLabel.removeFromSuperview()
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
+	
+	func moveLabel(label: UILabel, text: String, offset: CGPoint) -> Promise<Bool> {
+		return Promise { seal in
+			let auxLabel = UILabel(frame: label.frame)
+			auxLabel.text = text
+			auxLabel.font = label.font
+			auxLabel.textColor = label.textColor
+			auxLabel.textAlignment = label.textAlignment
+			auxLabel.backgroundColor = .clear
+			
+			auxLabel.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
+			auxLabel.alpha = 0
+			view.addSubview(auxLabel)
+			
+			UIView
+				.animate(.promise,
+						 duration: 0.5,
+						 delay: 0.0,
+						 options: .curveEaseIn,
+						 animations: {
+							label.transform = CGAffineTransform(translationX: offset.x, y: offset.y)
+							label.alpha = 0.0
+				})
+			
+			UIView
+				.animate(.promise,
+						 duration: 0.25,
+						 delay: 0.1,
+						 options: .curveEaseIn,
+						 animations: {
+							auxLabel.transform = .identity
+							auxLabel.alpha = 1.0
+				})
+				.done({ isCompleted in
+					auxLabel.removeFromSuperview()
+					
+					label.text = text
+					label.alpha = 1.0
+					label.transform = .identity
+					
+					seal.fulfill(isCompleted)
+				})
+		}
+	}
 }
 
 // Calling functions
 private extension VCChapter04 {
 	func change(toFlight: FlightData, animated: Bool = false) {
-		func withoutFade(imageView: UIImageView, toImage: UIImage, showEffects: Bool) -> Promise<Bool> {
-			return Promise { seal in
-				bgImageView.image = toImage
-				snowView.isHidden = !showEffects
-				seal.fulfill(true)
-			}
-		}
-		
 		guard let image = UIImage(named: toFlight.weatherImageName) else {
 			return
 		}
@@ -88,25 +159,38 @@ private extension VCChapter04 {
 		let currentEffect = toFlight.showWeatherEffects
 		
 		summary.text = toFlight.summary
-		flightNr.text = toFlight.flightNr
-		gateNr.text = toFlight.gateNr
-		departingFrom.text = toFlight.departingFrom
-		arrivingTo.text = toFlight.arrivingTo
-		flightStatus.text = toFlight.flightStatus
 		
-		let exec = !animated ?
-			withoutFade(imageView: bgImageView,
-						toImage: image,
-						showEffects: currentEffect) :
-			fade(imageView: bgImageView,
+		if !animated {
+			bgImageView.image = image
+			snowView.isHidden = !currentEffect
+			
+			flightNr.text = toFlight.flightNr
+			gateNr.text = toFlight.gateNr
+			departingFrom.text = toFlight.departingFrom
+			arrivingTo.text = toFlight.arrivingTo
+			flightStatus.text = toFlight.flightStatus
+			
+		} else {
+			let direction: AnimationDirection = toFlight.isTakingOff ? .positive : .negative
+			
+			let offsetDeparting = CGPoint(x: CGFloat(direction.rawValue * 80), y: 0.0)
+			let offsetArriving = CGPoint(x: 0.0, y: CGFloat(direction.rawValue * 50))
+			
+			_ = fade(imageView: bgImageView,
 				 toImage: image,
 				 showEffects: currentEffect)
+			
+			_ = cubeTransition(label: flightNr, text: toFlight.flightNr, direction: direction)
+			_ = cubeTransition(label: gateNr, text: toFlight.gateNr, direction: direction)
+			
+			_ = moveLabel(label: departingFrom, text: toFlight.departingFrom, offset: offsetDeparting)
+			_ = moveLabel(label: arrivingTo, text: toFlight.arrivingTo, offset: offsetArriving)
+			
+			_ = cubeTransition(label: flightStatus, text: toFlight.flightStatus, direction: .negative)
+		}
 		
-		_ = exec.done { _ in
-			// schedule next flight
-			delay(seconds: 3.0) {
-				self.change(toFlight: toFlight.isTakingOff ? parisToRome : londonToParis, animated: true)
-			}
+		delay(seconds: 3.0) {
+			self.change(toFlight: toFlight.isTakingOff ? parisToRome : londonToParis, animated: true)
 		}
 	}
 }
@@ -128,4 +212,9 @@ private extension VCChapter04 {
 		//start rotating the flights
 		change(toFlight: londonToParis)
 	}
+}
+
+enum AnimationDirection: Int {
+	case positive = 1
+	case negative = -1
 }
