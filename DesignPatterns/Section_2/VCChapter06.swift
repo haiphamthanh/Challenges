@@ -20,6 +20,10 @@ class VCChapter06: BaseViewControllerSection02 {
 	private var items: [Int] = [5, 6, 7]
 	private let itemTitles = ["Icecream money", "Great weather", "Beach ball", "Swim suit for him", "Swim suit for her", "Beach games", "Ironing board", "Cocktail mood", "Sunglasses", "Flip flops"]
 	
+	// MARK: Layout constrains
+	@IBOutlet private weak var menuHeightConstraint: NSLayoutConstraint!
+	
+	
 	// MARK: View life cycles
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -46,6 +50,30 @@ private extension VCChapter06 {
 	}
 	
 	func toggleMenu() {
+		titleLabel.superview?.constraints.forEach { constraint in
+			print("-> \(constraint.description)\n")
+			
+			if constraint.firstItem === titleLabel && constraint.firstAttribute == .centerX {
+				constraint.constant = isMenuOpen ? -100 : 0.0
+				return
+			}
+		}
+		
+		isMenuOpen = !isMenuOpen
+		menuHeightConstraint.constant = isMenuOpen ? 200.0 : 60.0
+		titleLabel.text = isMenuOpen ? "Opened Menu" : "Packing List"
+		
+		UIView.animate(withDuration: 1.0,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.4,
+					   initialSpringVelocity: 10.0,
+					   options: .curveEaseIn,
+					   animations: {
+						self.view.layoutIfNeeded()
+						
+						let angle: CGFloat = self.isMenuOpen ? .pi / 4 : 0.0
+						self.buttonMenu.transform = CGAffineTransform(rotationAngle: angle)
+		}, completion: nil)
 	}
 	
 	func showItem(at index: Int) {

@@ -23,17 +23,20 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Packing List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBt-ve-omX">
                                         <rect key="frame" x="161" y="22.5" width="92" height="21"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="titleLabel" label="titleLabel"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3y-ce-hUY">
                                         <rect key="frame" x="376" y="10.5" width="30" height="45"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="buttonMenu"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="27"/>
                                         <state key="normal" title="+"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="menuView" label="menuView"/>
                                 <constraints>
                                     <constraint firstItem="g3y-ce-hUY" firstAttribute="centerY" secondItem="HBt-ve-omX" secondAttribute="centerY" id="A4r-7f-KBd"/>
                                     <constraint firstAttribute="trailing" secondItem="g3y-ce-hUY" secondAttribute="trailing" constant="8" id="DY8-3t-6hY"/>
@@ -71,6 +74,7 @@
                     </view>
                     <connections>
                         <outlet property="buttonMenu" destination="g3y-ce-hUY" id="oxP-eG-agT"/>
+                        <outlet property="menuHeightConstraint" destination="rHp-pj-3CW" id="k3w-L5-J6u"/>
                         <outlet property="tableView" destination="1tg-xk-MG6" id="fM5-6l-eji"/>
                         <outlet property="titleLabel" destination="HBt-ve-omX" id="TnM-U9-5LI"/>
                     </connections>
