@@ -178,9 +178,9 @@ private extension VCChapter07 {
 						 usingSpringWithDamping: 0.7,
 						 initialSpringVelocity: 0.0,
 						 animations: {
-							let loginBtnColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1.0)
+							let tintColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1.0)
 							self.loginButton.center.y += 60
-							self.loginButton.backgroundColor = loginBtnColor
+							tintBgColor(layer: self.loginButton.layer, toColor: tintColor)
 							
 							let xAxis = CGFloat(40)
 							let yAxis = self.loginButton.frame.size.height / 2.0
@@ -188,6 +188,7 @@ private extension VCChapter07 {
 							self.spinner.alpha = 1.0
 				})
 				.done({ isCompleted in
+					roundCorners(layer: self.loginButton.layer, toRadius: 25.0)
 					seal.fulfill(isCompleted)
 				})
 		}
@@ -202,14 +203,15 @@ private extension VCChapter07 {
 			
 			UIView
 				.animate(.promise, duration: 0.33, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, animations: {
-					let loginBtnColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
+					let tintColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
 					self.loginButton.center.y -= 60
-					self.loginButton.backgroundColor = loginBtnColor
+					tintBgColor(layer: self.loginButton.layer, toColor: tintColor)
 					
 					self.spinner.center = CGPoint(x: -20.0, y: 16.0)
 					self.spinner.alpha = 0.0
 				})
 				.done({ isCompleted in
+					roundCorners(layer: self.loginButton.layer, toRadius: 10.0)
 					seal.fulfill(isCompleted)
 				})
 		}
