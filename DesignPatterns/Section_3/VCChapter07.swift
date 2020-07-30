@@ -92,10 +92,23 @@ private extension VCChapter07 {
 	}
 	
 	func disableCloud() {
-		cloud1.alpha = 0.0
-		cloud2.alpha = 0.0
-		cloud3.alpha = 0.0
-		cloud4.alpha = 0.0
+		let fadeIn = CABasicAnimation(keyPath: "opacity")
+		fadeIn.fromValue = 1.0
+		fadeIn.toValue = 0.0
+		fadeIn.duration = 0.5
+		fadeIn.fillMode = .backwards
+		
+		fadeIn.beginTime = CACurrentMediaTime() + 0.5
+		cloud1.layer.add(fadeIn, forKey: nil)
+		
+		fadeIn.beginTime = CACurrentMediaTime() + 0.7
+		cloud2.layer.add(fadeIn, forKey: nil)
+		
+		fadeIn.beginTime = CACurrentMediaTime() + 0.9
+		cloud3.layer.add(fadeIn, forKey: nil)
+		
+		fadeIn.beginTime = CACurrentMediaTime() + 1.1
+		cloud4.layer.add(fadeIn, forKey: nil)
 	}
 	
 	func disableLoginButton() {
