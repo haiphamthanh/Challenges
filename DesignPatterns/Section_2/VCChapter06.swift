@@ -136,6 +136,8 @@ private extension VCChapter06 {
 		// Height of imageView
 		let conHeight = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
 		NSLayoutConstraint.activate([conX, conBottom, conWidth, conHeight])
+		// Make sure allthings are executed before we have a new animation things
+		view.layoutIfNeeded()
 		
 		//B2: Animate view to show image
 		UIView.animate(withDuration: 0.8,
