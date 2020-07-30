@@ -153,6 +153,21 @@ private extension VCChapter06 {
 						conWidth.constant = 0.0
 						self.view.layoutIfNeeded()
 		}, completion: nil)
+		
+		// Challenge: Keep the image visible for 1 second and then animate it back out of the screen
+		UIView.animate(withDuration: 0.4,
+					   delay: 1.0,
+					   options: .curveEaseOut,
+					   animations: {
+						// Move back to init Y position
+						conBottom.constant = imageView.frame.size.height
+						
+						// Restore imageView size to -50
+						conWidth.constant = -50.0
+						self.view.layoutIfNeeded()
+		}) { _ in
+			imageView.removeFromSuperview()
+		}
 	}
 }
 
