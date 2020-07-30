@@ -51,17 +51,33 @@ private extension VCChapter06 {
 	
 	func toggleMenu() {
 		titleLabel.superview?.constraints.forEach { constraint in
-			print("-> \(constraint.description)\n")
+//			print("-> \(constraint.description)\n")
+			
+			isMenuOpen = !isMenuOpen
+			menuHeightConstraint.constant = isMenuOpen ? 200.0 : 60.0
+			titleLabel.text = isMenuOpen ? "Opened Menu" : "Packing List"
 			
 			if constraint.firstItem === titleLabel && constraint.firstAttribute == .centerX {
 				constraint.constant = isMenuOpen ? -100 : 0.0
 				return
 			}
+			
+			if constraint.identifier == "TitleCenterY" {
+				constraint.isActive = false
+				
+				// Add new constrain here
+				let newConstrain = NSLayoutConstraint(item: titleLabel!,
+													  attribute: .centerY,
+													  relatedBy: .equal,
+													  toItem: titleLabel.superview,
+													  attribute: .centerY,
+													  multiplier: isMenuOpen ? 0.67 : 1.0,
+													  constant: 5.0)
+				newConstrain.identifier = "TitleCenterY"
+				newConstrain.isActive = true
+				return
+			}
 		}
-		
-		isMenuOpen = !isMenuOpen
-		menuHeightConstraint.constant = isMenuOpen ? 200.0 : 60.0
-		titleLabel.text = isMenuOpen ? "Opened Menu" : "Packing List"
 		
 		UIView.animate(withDuration: 1.0,
 					   delay: 0.0,
@@ -74,6 +90,22 @@ private extension VCChapter06 {
 						let angle: CGFloat = self.isMenuOpen ? .pi / 4 : 0.0
 						self.buttonMenu.transform = CGAffineTransform(rotationAngle: angle)
 		}, completion: nil)
+		
+		if isMenuOpen {
+			slider = HorizontalItemList(inView: view)
+			slider.didSelectItem = { index in
+				print("add \(index)")
+				
+				self.items.append(index)
+				self.tableView.reloadData()
+				self.toggleMenu()
+			}
+			
+			titleLabel.superview?.addSubview(slider)
+			return
+		}
+		
+		return slider.removeFromSuperview()
 	}
 	
 	func showItem(at index: Int) {
