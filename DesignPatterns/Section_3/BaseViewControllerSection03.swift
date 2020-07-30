@@ -6,4 +6,20 @@
 //  Copyright © 2020 HaiKaito. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class BaseViewControllerSection03: UIViewController {
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		//        let labelFrame = view.frame
+		//        let labelName = String(describing: type(of: self))
+		//
+		//        let viewName = UILabel(frame: labelFrame)
+		//        viewName.text = labelName
+		//        viewName.textAlignment = .center
+		//
+		//        view.addSubview(viewName)
+		//        view.backgroundColor = hexColor("#A6C964")
+	}
+}

@@ -23,6 +23,7 @@
 		8A7446BB24D284BC00A53075 /* HorizontalItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7446BA24D284BC00A53075 /* HorizontalItemList.swift */; };
 		8A7446BE24D2A86B00A53075 /* Section3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A7446BD24D2A86B00A53075 /* Section3.storyboard */; };
 		8A7446C024D2A87E00A53075 /* BaseViewControllerSection03.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7446BF24D2A87E00A53075 /* BaseViewControllerSection03.swift */; };
+		8A7446C224D2A94000A53075 /* VCChapter07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7446C124D2A94000A53075 /* VCChapter07.swift */; };
 		8AB68E6C24C9EC6900C91732 /* VCChapter04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB68E6B24C9EC6900C91732 /* VCChapter04.swift */; };
 		8AF8A76324C7590E00B517E4 /* VCChapter01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8A76224C7590E00B517E4 /* VCChapter01.swift */; };
 		8AF8A76524C7623C00B517E4 /* BaseViewControllerSection01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8A76424C7623C00B517E4 /* BaseViewControllerSection01.swift */; };
@@ -75,6 +76,7 @@
 		8A7446BA24D284BC00A53075 /* HorizontalItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalItemList.swift; sourceTree = "<group>"; };
 		8A7446BD24D2A86B00A53075 /* Section3.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Section3.storyboard; sourceTree = "<group>"; };
 		8A7446BF24D2A87E00A53075 /* BaseViewControllerSection03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerSection03.swift; sourceTree = "<group>"; };
+		8A7446C124D2A94000A53075 /* VCChapter07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChapter07.swift; sourceTree = "<group>"; };
 		8AB68E6B24C9EC6900C91732 /* VCChapter04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChapter04.swift; sourceTree = "<group>"; };
 		8AF8A76224C7590E00B517E4 /* VCChapter01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChapter01.swift; sourceTree = "<group>"; };
 		8AF8A76424C7623C00B517E4 /* BaseViewControllerSection01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerSection01.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				8A7446BD24D2A86B00A53075 /* Section3.storyboard */,
 				8A7446BF24D2A87E00A53075 /* BaseViewControllerSection03.swift */,
+				8A7446C124D2A94000A53075 /* VCChapter07.swift */,
 			);
 			path = Section_3;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				8A62E02E24CABB8A00E16339 /* SnowView.swift in Sources */,
 				8AF8A76524C7623C00B517E4 /* BaseViewControllerSection01.swift in Sources */,
 				8A7446C024D2A87E00A53075 /* BaseViewControllerSection03.swift in Sources */,
+				8A7446C224D2A94000A53075 /* VCChapter07.swift in Sources */,
 				8A5D380D24C09615003B2824 /* ViewController.swift in Sources */,
 				8AF8A76324C7590E00B517E4 /* VCChapter01.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
