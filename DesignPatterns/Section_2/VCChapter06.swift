@@ -110,6 +110,47 @@ private extension VCChapter06 {
 	
 	func showItem(at index: Int) {
 		print("Tapped item at index \(index)")
+		
+		// Load image
+		let imageName = "summericons_100px_0\(index).png"
+		let image = UIImage(named: imageName)
+		let imageView = UIImageView(image: image)
+		
+		// Config view showing
+		imageView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
+		imageView.layer.cornerRadius = 5.0
+		imageView.layer.masksToBounds = true
+		view.addSubview(imageView)
+		
+		//B1: Make constraint for init imageView
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		// X position
+		let conX = imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+		// Y position
+		let conBottom = imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+														  constant: imageView.frame.size.height)
+		// width of imageView (0.33% view width and substract to 50)
+		let conWidth = imageView.widthAnchor.constraint(equalTo: view.widthAnchor,
+														multiplier: 0.33,
+														constant: -50.0)
+		// Height of imageView
+		let conHeight = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+		NSLayoutConstraint.activate([conX, conBottom, conWidth, conHeight])
+		
+		//B2: Animate view to show image
+		UIView.animate(withDuration: 0.8,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.4,
+					   initialSpringVelocity: 0.0,
+					   options: [],
+					   animations: {
+						// Move Y position to screen
+						conBottom.constant = -imageView.frame.size.height / 2
+						
+						// Restore imageView (from -50 to original) size
+						conWidth.constant = 0.0
+						self.view.layoutIfNeeded()
+		}, completion: nil)
 	}
 }
 
