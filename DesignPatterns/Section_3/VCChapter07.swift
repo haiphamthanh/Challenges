@@ -61,7 +61,7 @@ class VCChapter07: BaseViewControllerSection03 {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		moveOutInputScreen()
+		animateInputScreen()
 		disableCloud()
 		disableLoginButton()
 	}
@@ -69,7 +69,6 @@ class VCChapter07: BaseViewControllerSection03 {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		_ = moveInTitle()
 		_ = fadeInCloud()
 		_ = fadeInLoginButton()
 		animateClouds()
@@ -77,33 +76,19 @@ class VCChapter07: BaseViewControllerSection03 {
 }
 
 private extension VCChapter07 {
-	func moveOutInputScreen() {
-		heading.center.x -= view.bounds.width
-		userName.center.x -= view.bounds.width
-		password.center.x -= view.bounds.width
-	}
-	
-	func moveInTitle() -> Promise<Bool> {
-		return Promise { seal in
-			// Show tille first
-			UIView.animate(.promise, duration: 0.5, animations: {
-				self.heading.center.x += self.view.bounds.width
-			})
-			
-			// Next show username field
-			UIView.animate(.promise, duration: 0.5, delay: 0.3, options: [], animations: {
-				self.userName.center.x += self.view.bounds.width
-			})
-			
-			// Finally, show password field
-			UIView
-				.animate(.promise, duration: 0.5, delay: 0.4, options: [], animations: {
-					self.password.center.x += self.view.bounds.width
-				})
-				.done({ isCompleted in
-					seal.fulfill(isCompleted)
-				})
-		}
+	func animateInputScreen() {
+		let flyRight = CABasicAnimation(keyPath: "position.x")
+		flyRight.fromValue = -view.bounds.size.width / 2
+		flyRight.toValue = view.bounds.size.width / 2
+		flyRight.duration = 0.5
+		heading.layer.add(flyRight, forKey: nil)
+		
+		flyRight.beginTime = CACurrentMediaTime() + 0.3
+		flyRight.fillMode = .both
+		userName.layer.add(flyRight, forKey: nil)
+		
+		flyRight.beginTime = CACurrentMediaTime() + 0.4
+		password.layer.add(flyRight, forKey: nil)
 	}
 	
 	func disableCloud() {
