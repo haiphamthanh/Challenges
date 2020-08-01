@@ -97,6 +97,18 @@ extension VCChapter07: CAAnimationDelegate {
 			
 			layer?.add(pulse, forKey: nil)
 		}
+		
+		if name == "cloud" {
+			if let layer = anim.value(forKey: "layer") as? CALayer {
+				anim.setValue(nil, forKey: "layer")
+				
+				layer.position.x = -layer.bounds.width / 2
+				delay(seconds: 0.5) {
+					self.animateCloud(layer: layer)
+				}
+			}
+			
+		}
 	}
 }
 
@@ -351,27 +363,26 @@ private extension VCChapter07 {
 	}
 	
 	func animateClouds() {
-		_ = animateCloud(cloud1)
-		_ = animateCloud(cloud2)
-		_ = animateCloud(cloud3)
-		_ = animateCloud(cloud4)
+		_ = animateCloud(layer: cloud1.layer)
+		_ = animateCloud(layer: cloud2.layer)
+		_ = animateCloud(layer: cloud3.layer)
+		_ = animateCloud(layer: cloud4.layer)
 	}
 	
-	func animateCloud(_ cloud: UIImageView) {
+	func animateCloud(layer: CALayer) {
+		// 1. data for computing
 		let cloudSpeed = 60.0 / self.view.frame.size.width
-		let duration = (self.view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
+		let duration = (self.view.frame.size.width - layer.frame.origin.x) * cloudSpeed
 		
-		let completion:(Bool) -> () = { _ in
-			cloud.frame.origin.x = -cloud.frame.size.width
-			self.animateCloud(cloud)
-		}
+		// 2. Animation action
+		let cloudMove = CABasicAnimation(keyPath: "position.x")
+		cloudMove.delegate = self
+		cloudMove.duration = CFTimeInterval(duration)
+		cloudMove.toValue = view.frame.size.width + layer.bounds.width / 2
+		cloudMove.setValue("cloud", forKey: "name")
+		cloudMove.setValue(layer, forKey: "layer")
 		
-		UIView.animate(withDuration: TimeInterval(duration),
-					   delay: 0.0,
-					   options: .curveLinear,
-					   animations: {
-						cloud.frame.origin.x = self.view.frame.size.width
-		},completion: completion)
+		layer.add(cloudMove, forKey: nil)
 	}
 	
 	func change(state: ProcessingState) {
