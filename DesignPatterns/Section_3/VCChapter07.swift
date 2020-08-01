@@ -43,6 +43,7 @@ class VCChapter07: BaseViewControllerSection03 {
 	let spinner = UIActivityIndicatorView(style: .whiteLarge)
 	let status = UIImageView(image: UIImage(named: "banner"))
 	let label = UILabel()
+	let info = UILabel()
 	
 	var statusPosition = CGPoint.zero
 	var processingState = ProcessingState.noAuth {
@@ -72,6 +73,7 @@ class VCChapter07: BaseViewControllerSection03 {
 		_ = fadeInCloud()
 		_ = fadeInLoginButton()
 		animateClouds()
+		moveInInstruction()
 	}
 }
 
@@ -187,6 +189,21 @@ private extension VCChapter07 {
 					seal.fulfill(isCompleted)
 				})
 		}
+	}
+	
+	func moveInInstruction() {
+		let flyLeft = CABasicAnimation(keyPath: "position.x")
+		flyLeft.fromValue = info.layer.position.x + view.frame.size.width
+		flyLeft.toValue = info.layer.position.x
+		flyLeft.duration = 5.0
+		
+		let fadeLabelIn = CABasicAnimation(keyPath: "opacity")
+		fadeLabelIn.fromValue  = 0.2
+		fadeLabelIn.toValue = 1.0
+		fadeLabelIn.duration = 4.5
+		
+		info.layer.add(flyLeft, forKey: "infoappear")
+		info.layer.add(fadeLabelIn, forKey: "fadein")
 	}
 	
 	func increaseButtonSize() -> Promise<Bool> {
@@ -408,12 +425,23 @@ private extension VCChapter07 {
 		label.textColor = UIColor(red: 0.89, green: 0.38, blue: 0.0, alpha: 1.0)
 		label.textAlignment = .center
 		
+		info.frame = CGRect(x: 0.0,
+							y: loginButton.center.y + 60.0,
+							width: view.frame.size.width,
+							height: 30)
+		info.backgroundColor = .clear
+		info.font = UIFont(name: "HelveticaNeue", size: 12.0)
+		info.textAlignment = .center
+		info.textColor = .white
+		info.text = "Tap on a field and enter usernam and password"
+		
 		userName.delegate = self
 		password.delegate = self
 		statusPosition = status.center
 		
 		loginButton.addSubview(spinner)
 		status.addSubview(label)
+		view.insertSubview(info, belowSubview: loginButton)
 		view.addSubview(status)
 		
 		let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.endEditing))
@@ -485,5 +513,7 @@ extension VCChapter07: UITextFieldDelegate {
 	
 	func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
 		_ = changeSize(textField: textField, isSketch: false)
+		
+		info.layer.removeAllAnimations()
 	}
 }
