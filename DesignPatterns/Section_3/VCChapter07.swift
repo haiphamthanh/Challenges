@@ -525,11 +525,31 @@ private extension VCChapter07 {
 		
 		loginButton.isEnabled = true
 	}
+	
+	func insertBalloon() {
+		let balloon = CALayer()
+		balloon.contents = UIImage(named: "balloon")!.cgImage
+		balloon.frame = CGRect(x: -50.0, y: 0.0, width: 50.0, height: 65.0)
+		view.layer.insertSublayer(balloon, below: userName.layer)
+		
+		let flight = CAKeyframeAnimation(keyPath: "position")
+		flight.duration = 12.0
+		flight.values = [CGPoint(x: -50.0, y: 0.0),
+						 CGPoint(x: view.frame.width + 50.0, y: 160),
+						 CGPoint(x: -50.0, y: loginButton.center.y)]
+			.map{ NSValue(cgPoint: $0) }
+		flight.keyTimes = [0.0, 0.5, 1.0]
+		
+		balloon.add(flight, forKey: nil)
+		balloon.position = CGPoint(x: -50.0, y: loginButton.center.y)
+	}
 }
 
 // Actions
 private extension VCChapter07 {
 	func connect() -> Promise<Bool> {
+		insertBalloon()
+		
 		return Promise { seal in
 			processingState = .connecting
 			
