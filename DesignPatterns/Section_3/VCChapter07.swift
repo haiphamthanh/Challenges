@@ -92,7 +92,7 @@ extension VCChapter07: CAAnimationDelegate {
 			let pulse = CABasicAnimation(keyPath: "transform.scale")
 			pulse.fromValue = 1.25
 			pulse.toValue = 1.0
-			pulse.duration = 0.25
+			pulse.duration = 0.5
 			
 			layer?.add(pulse, forKey: nil)
 		}
@@ -113,25 +113,31 @@ extension VCChapter07: CAAnimationDelegate {
 
 private extension VCChapter07 {
 	func animateInputScreen() {
-		let flyRight = CABasicAnimation(keyPath: "position.x")
-		flyRight.duration = 0.5
-		flyRight.delegate = self
-		flyRight.setValue("form", forKey: "name")
+		let formGroup = CAAnimationGroup()
+		formGroup.duration = 0.5
+		formGroup.fillMode = .backwards
 		
+		let flyRight = CABasicAnimation(keyPath: "position.x")
 		flyRight.fromValue = -view.bounds.size.width / 2
 		flyRight.toValue = view.bounds.size.width / 2
 		
-		flyRight.setValue(heading.layer, forKey: "layer")
-		heading.layer.add(flyRight, forKey: nil)
+		let fadeFieldIn = CABasicAnimation(keyPath: "opacity")
+		fadeFieldIn.fromValue = 0.25
+		fadeFieldIn.toValue = 1.0
 		
-		flyRight.beginTime = CACurrentMediaTime() + 0.3
-		flyRight.fillMode = .both
-		flyRight.setValue(userName.layer, forKey: "layer")
-		userName.layer.add(flyRight, forKey: nil)
+		formGroup.animations = [flyRight, fadeFieldIn]
+		heading.layer.add(formGroup, forKey: nil)
 		
-		flyRight.beginTime = CACurrentMediaTime() + 0.4
-		flyRight.setValue(password.layer, forKey: "layer")
-		password.layer.add(flyRight, forKey: nil)
+		formGroup.delegate = self
+		formGroup.setValue("form", forKey: "name")
+		
+		formGroup.beginTime = CACurrentMediaTime() + 0.3
+		formGroup.setValue(userName.layer, forKey: "layer")
+		userName.layer.add(formGroup, forKey: nil)
+		
+		formGroup.beginTime = CACurrentMediaTime() + 0.4
+		formGroup.setValue(password.layer, forKey: "layer")
+		password.layer.add(formGroup, forKey: nil)
 	}
 	
 	func disableCloud() {
