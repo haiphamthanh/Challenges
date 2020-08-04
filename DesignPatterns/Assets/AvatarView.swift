@@ -95,6 +95,7 @@ class AvatarView: UIView {
     label.frame = CGRect(x: 0.0, y: bounds.size.height + 10.0, width: bounds.size.width, height: 24.0)
   }
 	
+	// morphSize: Kích thước biến dạng của hình
 	func bounceOff(point: CGPoint, morphSize: CGSize) {
 		let originalCenter = center
 		
@@ -121,5 +122,22 @@ class AvatarView: UIView {
 				self.bounceOff(point: point, morphSize: morphSize)
 			})
 		}
+		
+		// Nếu đi trừ bên phải vào: x = 0 					   , y = targetMorphHeight, width = morphSize, heigh = morphSize
+		// Nếu đi trừ bên phải vào: x = width - morphSize.width, y = targetMorphHeight, width = morphSize, heigh = morphSize
+		let targetMorphHeight = bounds.height - morphSize.height
+		let xChanged = (originalCenter.x > point.x) ? 0.0 : bounds.width - morphSize.width
+		
+		let morphedFrame = CGRect(x: xChanged, y: targetMorphHeight, width: morphSize.width, height: morphSize.height)
+		
+		// Animate
+		let morphAnimation = CABasicAnimation(keyPath: "path")
+		morphAnimation.duration = animationDuration
+		morphAnimation.toValue = UIBezierPath(ovalIn: morphedFrame).cgPath
+		
+		morphAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+		
+		circleLayer.add(morphAnimation, forKey: nil)
+		maskLayer.add(morphAnimation, forKey: nil)
 	}
 }
