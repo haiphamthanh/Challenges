@@ -28,7 +28,7 @@ class AvatarView: UIView {
   
   //constants
   let lineWidth: CGFloat = 6.0
-  let animationDuration = 1.0
+  let animationDuration = 0.5
   
   //ui
   let photoLayer = CALayer()
@@ -60,7 +60,11 @@ class AvatarView: UIView {
   var shouldTransitionToFinishedState = false
   
   override func didMoveToWindow() {
+	photoLayer.mask = maskLayer
+	
     layer.addSublayer(photoLayer)
+	layer.addSublayer(circleLayer)
+	addSubview(label)
   }
   
   override func layoutSubviews() {
@@ -90,5 +94,32 @@ class AvatarView: UIView {
     //Size the label
     label.frame = CGRect(x: 0.0, y: bounds.size.height + 10.0, width: bounds.size.width, height: 24.0)
   }
-  
+	
+	func bounceOff(point: CGPoint, morphSize: CGSize) {
+		let originalCenter = center
+		
+		UIView.animate(withDuration: animationDuration,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.8,
+					   initialSpringVelocity: 0.0,
+					   options: [],
+					   animations: {
+						self.center = point
+		}) { (_) in
+			// complete bounce to
+		}
+		
+		UIView.animate(withDuration: animationDuration,
+					   delay: animationDuration,
+					   usingSpringWithDamping: 0.7,
+					   initialSpringVelocity: 1.0,
+					   options: [],
+					   animations: {
+						self.center = originalCenter
+		}) { (_) in
+			delay(seconds: 0.1, completion: {
+				self.bounceOff(point: point, morphSize: morphSize)
+			})
+		}
+	}
 }
