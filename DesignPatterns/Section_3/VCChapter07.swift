@@ -64,7 +64,6 @@ class VCChapter07: BaseViewControllerSection03 {
 		
 		animateInputScreen()
 		disableCloud()
-		disableLoginButton()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -93,7 +92,7 @@ extension VCChapter07: CAAnimationDelegate {
 			let pulse = CABasicAnimation(keyPath: "transform.scale")
 			pulse.fromValue = 1.25
 			pulse.toValue = 1.0
-			pulse.duration = 0.25
+			pulse.duration = 0.5
 			
 			layer?.add(pulse, forKey: nil)
 		}
@@ -114,25 +113,31 @@ extension VCChapter07: CAAnimationDelegate {
 
 private extension VCChapter07 {
 	func animateInputScreen() {
-		let flyRight = CABasicAnimation(keyPath: "position.x")
-		flyRight.duration = 0.5
-		flyRight.delegate = self
-		flyRight.setValue("form", forKey: "name")
+		let formGroup = CAAnimationGroup()
+		formGroup.duration = 0.5
+		formGroup.fillMode = .backwards
 		
+		let flyRight = CABasicAnimation(keyPath: "position.x")
 		flyRight.fromValue = -view.bounds.size.width / 2
 		flyRight.toValue = view.bounds.size.width / 2
 		
-		flyRight.setValue(heading.layer, forKey: "layer")
-		heading.layer.add(flyRight, forKey: nil)
+		let fadeFieldIn = CABasicAnimation(keyPath: "opacity")
+		fadeFieldIn.fromValue = 0.25
+		fadeFieldIn.toValue = 1.0
 		
-		flyRight.beginTime = CACurrentMediaTime() + 0.3
-		flyRight.fillMode = .both
-		flyRight.setValue(userName.layer, forKey: "layer")
-		userName.layer.add(flyRight, forKey: nil)
+		formGroup.animations = [flyRight, fadeFieldIn]
+		heading.layer.add(formGroup, forKey: nil)
 		
-		flyRight.beginTime = CACurrentMediaTime() + 0.4
-		flyRight.setValue(password.layer, forKey: "layer")
-		password.layer.add(flyRight, forKey: nil)
+		formGroup.delegate = self
+		formGroup.setValue("form", forKey: "name")
+		
+		formGroup.beginTime = CACurrentMediaTime() + 0.3
+		formGroup.setValue(userName.layer, forKey: "layer")
+		userName.layer.add(formGroup, forKey: nil)
+		
+		formGroup.beginTime = CACurrentMediaTime() + 0.4
+		formGroup.setValue(password.layer, forKey: "layer")
+		password.layer.add(formGroup, forKey: nil)
 	}
 	
 	func disableCloud() {
@@ -153,12 +158,6 @@ private extension VCChapter07 {
 		
 		fadeIn.beginTime = CACurrentMediaTime() + 1.1
 		cloud4.layer.add(fadeIn, forKey: nil)
-	}
-	
-	func disableLoginButton() {
-		// Move button down 30pt and hide it
-		loginButton.center.y += 30
-		loginButton.alpha = 0.0
 	}
 	
 	func fadeInCloud() -> Promise<Bool> {
@@ -187,19 +186,28 @@ private extension VCChapter07 {
 	
 	func fadeInLoginButton() -> Promise<Bool> {
 		return Promise { seal in
-			UIView
-				.animate(.promise,
-						 duration: 0.5,
-						 delay: 0.5,
-						 usingSpringWithDamping: 0.5,
-						 initialSpringVelocity: 0.0,
-						 animations: {
-							self.loginButton.center.y -= 30.0
-							self.loginButton.alpha = 1.0
-				})
-				.done({ isCompleted in
-					seal.fulfill(isCompleted)
-				})
+			let groupAnimation = CAAnimationGroup()
+			groupAnimation.beginTime = CACurrentMediaTime() + 0.5
+			groupAnimation.duration = 3
+			groupAnimation.fillMode = .backwards
+			groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+			
+			let scaleDown = CABasicAnimation(keyPath: "transform.scale")
+			scaleDown.fromValue = 3.5
+			scaleDown.toValue = 1.0
+			
+			let rotate = CABasicAnimation(keyPath: "transform.rotation")
+			rotate.fromValue = .pi / 4.0
+			rotate.toValue = 0.0
+			
+			let fade = CABasicAnimation(keyPath: "opacity")
+			fade.fromValue = 0.0
+			fade.toValue = 1.0
+			
+			groupAnimation.animations = [scaleDown, rotate, fade]
+			loginButton.layer.add(groupAnimation, forKey: nil)
+			
+			seal.fulfill(true)
 		}
 	}
 	
