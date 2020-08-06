@@ -8,6 +8,9 @@
 
 import UIKit
 
+// MARK: Change testing value to change testing view screen
+let testingType = ChapterView.chapter4
+
 class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -28,9 +31,9 @@ private extension ViewController {
 }
 
 // Define tesing views
-let testingType = ChapterView.chapter1
 enum ChapterView: String {
     case chapter1 = "VCChapter01"
+	case chapter4 = "VCChapter04"
     
     func loadVC() -> UIViewController {
         func storyboard(section: Section, name: String) -> UIViewController {
