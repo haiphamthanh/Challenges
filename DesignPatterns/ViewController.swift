@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+		
         return action(viewType: testingType)
     }
 }
@@ -23,9 +23,7 @@ private extension ViewController {
     }
     
     func change(vc: UIViewController) {
-        UIView.transition(from: view, to: vc.view, duration: 0.4) { [weak self] (_) in
-            self?.view.removeFromSuperview()
-        }
+		present(vc, animated: true, completion: nil)
     }
 }
 
