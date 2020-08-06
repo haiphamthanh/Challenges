@@ -43,6 +43,7 @@ class VCChapter07: BaseViewControllerSection03 {
 	let spinner = UIActivityIndicatorView(style: .whiteLarge)
 	let status = UIImageView(image: UIImage(named: "banner"))
 	let label = UILabel()
+	let info = UILabel()
 	
 	var statusPosition = CGPoint.zero
 	var processingState = ProcessingState.noAuth {
@@ -72,22 +73,65 @@ class VCChapter07: BaseViewControllerSection03 {
 		_ = fadeInCloud()
 		_ = fadeInLoginButton()
 		animateClouds()
+		moveInInstruction()
+	}
+}
+
+extension VCChapter07: CAAnimationDelegate {
+	func animationDidStart(_ anim: CAAnimation) {
+	}
+	
+	func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+		guard let name = anim.value(forKey: "name") as? String else {
+			return
+		}
+		
+		if name == "form" {
+			let layer = anim.value(forKey: "layer") as? CALayer
+			anim.setValue(nil, forKey: "layer")
+			
+			let pulse = CABasicAnimation(keyPath: "transform.scale")
+			pulse.fromValue = 1.25
+			pulse.toValue = 1.0
+			pulse.duration = 0.25
+			
+			layer?.add(pulse, forKey: nil)
+		}
+		
+		if name == "cloud" {
+			if let layer = anim.value(forKey: "layer") as? CALayer {
+				anim.setValue(nil, forKey: "layer")
+				
+				layer.position.x = -layer.bounds.width / 2
+				delay(seconds: 0.5) {
+					self.animateCloud(layer: layer)
+				}
+			}
+			
+		}
 	}
 }
 
 private extension VCChapter07 {
 	func animateInputScreen() {
 		let flyRight = CABasicAnimation(keyPath: "position.x")
+		flyRight.duration = 0.5
+		flyRight.delegate = self
+		flyRight.setValue("form", forKey: "name")
+		
 		flyRight.fromValue = -view.bounds.size.width / 2
 		flyRight.toValue = view.bounds.size.width / 2
-		flyRight.duration = 0.5
+		
+		flyRight.setValue(heading.layer, forKey: "layer")
 		heading.layer.add(flyRight, forKey: nil)
 		
 		flyRight.beginTime = CACurrentMediaTime() + 0.3
 		flyRight.fillMode = .both
+		flyRight.setValue(userName.layer, forKey: "layer")
 		userName.layer.add(flyRight, forKey: nil)
 		
 		flyRight.beginTime = CACurrentMediaTime() + 0.4
+		flyRight.setValue(password.layer, forKey: "layer")
 		password.layer.add(flyRight, forKey: nil)
 	}
 	
@@ -157,6 +201,21 @@ private extension VCChapter07 {
 					seal.fulfill(isCompleted)
 				})
 		}
+	}
+	
+	func moveInInstruction() {
+		let flyLeft = CABasicAnimation(keyPath: "position.x")
+		flyLeft.fromValue = info.layer.position.x + view.frame.size.width
+		flyLeft.toValue = info.layer.position.x
+		flyLeft.duration = 5.0
+		
+		let fadeLabelIn = CABasicAnimation(keyPath: "opacity")
+		fadeLabelIn.fromValue  = 0.2
+		fadeLabelIn.toValue = 1.0
+		fadeLabelIn.duration = 4.5
+		
+		info.layer.add(flyLeft, forKey: "infoappear")
+		info.layer.add(fadeLabelIn, forKey: "fadein")
 	}
 	
 	func increaseButtonSize() -> Promise<Bool> {
@@ -304,27 +363,26 @@ private extension VCChapter07 {
 	}
 	
 	func animateClouds() {
-		_ = animateCloud(cloud1)
-		_ = animateCloud(cloud2)
-		_ = animateCloud(cloud3)
-		_ = animateCloud(cloud4)
+		_ = animateCloud(layer: cloud1.layer)
+		_ = animateCloud(layer: cloud2.layer)
+		_ = animateCloud(layer: cloud3.layer)
+		_ = animateCloud(layer: cloud4.layer)
 	}
 	
-	func animateCloud(_ cloud: UIImageView) {
+	func animateCloud(layer: CALayer) {
+		// 1. data for computing
 		let cloudSpeed = 60.0 / self.view.frame.size.width
-		let duration = (self.view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
+		let duration = (self.view.frame.size.width - layer.frame.origin.x) * cloudSpeed
 		
-		let completion:(Bool) -> () = { _ in
-			cloud.frame.origin.x = -cloud.frame.size.width
-			self.animateCloud(cloud)
-		}
+		// 2. Animation action
+		let cloudMove = CABasicAnimation(keyPath: "position.x")
+		cloudMove.delegate = self
+		cloudMove.duration = CFTimeInterval(duration)
+		cloudMove.toValue = view.frame.size.width + layer.bounds.width / 2
+		cloudMove.setValue("cloud", forKey: "name")
+		cloudMove.setValue(layer, forKey: "layer")
 		
-		UIView.animate(withDuration: TimeInterval(duration),
-					   delay: 0.0,
-					   options: .curveLinear,
-					   animations: {
-						cloud.frame.origin.x = self.view.frame.size.width
-		},completion: completion)
+		layer.add(cloudMove, forKey: nil)
 	}
 	
 	func change(state: ProcessingState) {
@@ -378,12 +436,23 @@ private extension VCChapter07 {
 		label.textColor = UIColor(red: 0.89, green: 0.38, blue: 0.0, alpha: 1.0)
 		label.textAlignment = .center
 		
+		info.frame = CGRect(x: 0.0,
+							y: loginButton.center.y + 60.0,
+							width: view.frame.size.width,
+							height: 30)
+		info.backgroundColor = .clear
+		info.font = UIFont(name: "HelveticaNeue", size: 12.0)
+		info.textAlignment = .center
+		info.textColor = .white
+		info.text = "Tap on a field and enter usernam and password"
+		
 		userName.delegate = self
 		password.delegate = self
 		statusPosition = status.center
 		
 		loginButton.addSubview(spinner)
 		status.addSubview(label)
+		view.insertSubview(info, belowSubview: loginButton)
 		view.addSubview(status)
 		
 		let viewTap = UITapGestureRecognizer(target: self, action: #selector(self.endEditing))
@@ -455,5 +524,7 @@ extension VCChapter07: UITextFieldDelegate {
 	
 	func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
 		_ = changeSize(textField: textField, isSketch: false)
+		
+		info.layer.removeAllAnimations()
 	}
 }
