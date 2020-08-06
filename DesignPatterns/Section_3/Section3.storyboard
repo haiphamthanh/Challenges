@@ -86,12 +86,97 @@
             </objects>
             <point key="canvasLocation" x="262.80193236714979" y="245.33035714285714"/>
         </scene>
+        <!--Chapter13-->
+        <scene sceneID="wKa-vE-4Ns">
+            <objects>
+                <viewController storyboardIdentifier="VCChapter13" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GrZ-De-Ywx" customClass="VCChapter13" customModule="DesignPatterns" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QgB-SQ-2tw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-boxingring" translatesAutoresizingMaskIntoConstraints="NO" id="XsY-Tp-sru">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvX-xk-OiO" customClass="AvatarView" customModule="DesignPatterns" customModuleProvider="target">
+                                <rect key="frame" x="27" y="283" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="empty"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Searching for opponents..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TD0-YO-G5V">
+                                <rect key="frame" x="91" y="62" width="232" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="29"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IIY-Ng-t6m">
+                                <rect key="frame" x="47" y="793" width="320" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="31"/>
+                                <color key="tintColor" red="0.90196078430000004" green="0.81989910440000002" blue="0.20475495020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="2" height="2"/>
+                                <state key="normal" title="Search Again">
+                                    <color key="titleShadowColor" red="0.33333334329999997" green="0.33333334329999997" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="alpha">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionSearchAgain" destination="GrZ-De-Ywx" eventType="touchUpInside" id="7va-Uw-IEs"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ocE-KV-3iq" customClass="AvatarView" customModule="DesignPatterns" customModuleProvider="target">
+                                <rect key="frame" x="297" y="283" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="name" value="Me"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="avatar-1"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vs." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Kx-eo-gSS">
+                                <rect key="frame" x="179" y="310" width="58" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="36"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="alpha">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="IYF-Yx-Jaz"/>
+                    </view>
+                    <connections>
+                        <outlet property="myAvatar" destination="ocE-KV-3iq" id="jWO-LK-plw"/>
+                        <outlet property="opponentAvatar" destination="bvX-xk-OiO" id="cvm-dV-aBr"/>
+                        <outlet property="searchAgain" destination="IIY-Ng-t6m" id="5Q9-RK-wBm"/>
+                        <outlet property="status" destination="TD0-YO-G5V" id="nEt-ia-ZD2"/>
+                        <outlet property="vs" destination="0Kx-eo-gSS" id="2jb-YN-auG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vjy-c9-nER" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1032" y="302"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="avatar-1" width="100" height="100"/>
+        <image name="bg-boxingring" width="320" height="568"/>
         <image name="bg-sunny" width="320" height="568"/>
         <image name="bg-sunny-cloud-1" width="159" height="50"/>
         <image name="bg-sunny-cloud-2" width="138" height="49"/>
         <image name="bg-sunny-cloud-3" width="74" height="35"/>
         <image name="bg-sunny-cloud-4" width="115" height="50"/>
+        <image name="empty" width="97" height="105"/>
     </resources>
 </document>
