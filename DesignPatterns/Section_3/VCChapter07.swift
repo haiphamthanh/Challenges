@@ -114,6 +114,13 @@ extension VCChapter07: CAAnimationDelegate {
 
 private extension VCChapter07 {
 	func animateInputScreen() {
+		let wobble = CAKeyframeAnimation(keyPath: "transform.rotation")
+		wobble.duration = 0.25
+		wobble.repeatCount = 4
+		wobble.values = [0.0, -.pi / 4.0, 0.0, .pi / 4.0, 0.0 ]
+		wobble.keyTimes = [0.0, 0.25, 0.5, 0.75, 1.0 ]
+		heading.layer.add(wobble, forKey: nil)
+		
 		let formGroup = CAAnimationGroup()
 		formGroup.duration = 0.5
 		formGroup.fillMode = .backwards
@@ -127,7 +134,6 @@ private extension VCChapter07 {
 		fadeFieldIn.toValue = 1.0
 		
 		formGroup.animations = [flyRight, fadeFieldIn]
-		heading.layer.add(formGroup, forKey: nil)
 		
 		formGroup.delegate = self
 		formGroup.setValue("form", forKey: "name")
@@ -519,11 +525,31 @@ private extension VCChapter07 {
 		
 		loginButton.isEnabled = true
 	}
+	
+	func insertBalloon() {
+		let balloon = CALayer()
+		balloon.contents = UIImage(named: "balloon")!.cgImage
+		balloon.frame = CGRect(x: -50.0, y: 0.0, width: 50.0, height: 65.0)
+		view.layer.insertSublayer(balloon, below: userName.layer)
+		
+		let flight = CAKeyframeAnimation(keyPath: "position")
+		flight.duration = 12.0
+		flight.values = [CGPoint(x: -50.0, y: 0.0),
+						 CGPoint(x: view.frame.width + 50.0, y: 160),
+						 CGPoint(x: -50.0, y: loginButton.center.y)]
+			.map{ NSValue(cgPoint: $0) }
+		flight.keyTimes = [0.0, 0.5, 1.0]
+		
+		balloon.add(flight, forKey: nil)
+		balloon.position = CGPoint(x: -50.0, y: loginButton.center.y)
+	}
 }
 
 // Actions
 private extension VCChapter07 {
 	func connect() -> Promise<Bool> {
+		insertBalloon()
+		
 		return Promise { seal in
 			processingState = .connecting
 			
