@@ -12,40 +12,40 @@ import UIKit
 let testingType = ChapterView.chapter6
 
 class ViewController: UIViewController {
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		
-        return action(viewType: testingType)
-    }
+		return action(viewType: testingType)
+	}
 }
 
 private extension ViewController {
-    func action(viewType: ChapterView) {
-        let vc = viewType.loadVC()
-        return change(vc: vc)
-    }
-    
-    func change(vc: UIViewController) {
+	func action(viewType: ChapterView) {
+		let vc = viewType.loadVC()
+		return change(vc: vc)
+	}
+	
+	func change(vc: UIViewController) {
 		present(vc, animated: true, completion: nil)
-    }
+	}
 }
 
 // Define tesing views
 enum ChapterView: String {
-    case chapter1 = "VCChapter01"
+	case chapter1 = "VCChapter01"
 	case chapter4 = "VCChapter04"
 	case chapter6 = "VCChapter06"
-    
-    func loadVC() -> UIViewController {
-        func storyboard(section: Section, name: String) -> UIViewController {
-            return section
-                .loadStoryboard()
-                .instantiateViewController(withIdentifier: name)
-        }
+	
+	func loadVC() -> UIViewController {
+		func storyboard(section: Section, name: String) -> UIViewController {
+			return section
+				.loadStoryboard()
+				.instantiateViewController(withIdentifier: name)
+		}
 		
 		let sectionType = section(from: self)
-        return storyboard(section: sectionType, name: rawValue)
-    }
+		return storyboard(section: sectionType, name: rawValue)
+	}
 	
 	func section(from chapter: ChapterView) -> Section {
 		switch chapter {
@@ -58,10 +58,10 @@ enum ChapterView: String {
 }
 
 enum Section: String {
-    case one = "Section1"
-	case two = "Section2"
-    
-    func loadStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: rawValue, bundle: nil)
-    }
+	case one 	= "Section1"
+	case two 	= "Section2"
+	
+	func loadStoryboard() -> UIStoryboard {
+		return UIStoryboard(name: rawValue, bundle: nil)
+	}
 }

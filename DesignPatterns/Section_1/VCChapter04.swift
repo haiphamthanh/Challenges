@@ -217,8 +217,8 @@ private extension VCChapter04 {
 			let offsetArriving = CGPoint(x: 0.0, y: CGFloat(direction.rawValue * 50))
 			
 			_ = fade(imageView: bgImageView,
-				 toImage: image,
-				 showEffects: currentEffect)
+					 toImage: image,
+					 showEffects: currentEffect)
 			
 			_ = cubeTransition(label: flightNr, text: toFlight.flightNr, direction: direction)
 			_ = cubeTransition(label: gateNr, text: toFlight.gateNr, direction: direction)

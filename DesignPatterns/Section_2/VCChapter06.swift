@@ -51,8 +51,6 @@ private extension VCChapter06 {
 	
 	func toggleMenu() {
 		titleLabel.superview?.constraints.forEach { constraint in
-//			print("-> \(constraint.description)\n")
-			
 			isMenuOpen = !isMenuOpen
 			menuHeightConstraint.constant = isMenuOpen ? 200.0 : 60.0
 			titleLabel.text = isMenuOpen ? "Opened Menu" : "Packing List"
