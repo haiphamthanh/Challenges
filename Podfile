@@ -5,6 +5,7 @@ target 'DesignPatterns' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod "PromiseKit", "~> 6.8"
+	pod 'FLEX' , "3.1.2", :configurations => ['Debug']
 
   # Pods for DesignPatterns
 
