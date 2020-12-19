@@ -28,6 +28,7 @@
 		8A7CD67624D85BA700B2C7F5 /* Arial Rounded Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A7CD67524D85BA700B2C7F5 /* Arial Rounded Bold.ttf */; };
 		8A7CD67824D85BF900B2C7F5 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7CD67724D85BF900B2C7F5 /* AvatarView.swift */; };
 		8AB68E6C24C9EC6900C91732 /* VCChapter04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB68E6B24C9EC6900C91732 /* VCChapter04.swift */; };
+		8AB739C6253C8294002225FB /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB739C5253C8294002225FB /* AppStoryboard.swift */; };
 		8AD7037224D311040050C346 /* AnimationChallenging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD7037124D311040050C346 /* AnimationChallenging.swift */; };
 		8AF8A76324C7590E00B517E4 /* VCChapter01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8A76224C7590E00B517E4 /* VCChapter01.swift */; };
 		8AF8A76524C7623C00B517E4 /* BaseViewControllerSection01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8A76424C7623C00B517E4 /* BaseViewControllerSection01.swift */; };
@@ -85,6 +86,7 @@
 		8A7CD67524D85BA700B2C7F5 /* Arial Rounded Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arial Rounded Bold.ttf"; sourceTree = "<group>"; };
 		8A7CD67724D85BF900B2C7F5 /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		8AB68E6B24C9EC6900C91732 /* VCChapter04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChapter04.swift; sourceTree = "<group>"; };
+		8AB739C5253C8294002225FB /* AppStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		8AD7037124D311040050C346 /* AnimationChallenging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationChallenging.swift; sourceTree = "<group>"; };
 		8AF8A76224C7590E00B517E4 /* VCChapter01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChapter01.swift; sourceTree = "<group>"; };
 		8AF8A76424C7623C00B517E4 /* BaseViewControllerSection01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerSection01.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			children = (
 				8A7CD67424D85B9A00B2C7F5 /* Assets */,
 				8A7446BC24D2A85700A53075 /* Section_3 */,
+				8AB739B5253B45C5002225FB /* Others */,
 				8A7446B324D2815000A53075 /* Section_2 */,
 				8AF8A76124C758AF00B517E4 /* Section_1 */,
 				8A5D380A24C09615003B2824 /* AppDelegate.swift */,
@@ -171,6 +174,7 @@
 				8A5D381124C09616003B2824 /* Assets.xcassets */,
 				8A5D381324C09616003B2824 /* LaunchScreen.storyboard */,
 				8A5D381624C09616003B2824 /* Info.plist */,
+				8AB739C5253C8294002225FB /* AppStoryboard.swift */,
 			);
 			path = DesignPatterns;
 			sourceTree = "<group>";
@@ -225,6 +229,13 @@
 				8A62E02B24CAB76900E16339 /* FlightData.swift */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		8AB739B5253B45C5002225FB /* Others */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Others;
 			sourceTree = "<group>";
 		};
 		8AF8A76124C758AF00B517E4 /* Section_1 */ = {
@@ -505,6 +516,9 @@
 				8AF8A76324C7590E00B517E4 /* VCChapter01.swift in Sources */,
 				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
 				8A7CD67824D85BF900B2C7F5 /* AvatarView.swift in Sources */,
+				8AB739C6253C8294002225FB /* AppStoryboard.swift in Sources */,
+				8AF8A76324C7590E00B517E4 /* VCChapter01.swift in Sources */,
+				8A5D380B24C09615003B2824 /* AppDelegate.swift in Sources */,
 				8A7446B724D2819100A53075 /* BaseViewControllerSection02.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
